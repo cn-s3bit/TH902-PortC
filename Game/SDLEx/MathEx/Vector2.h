@@ -8,6 +8,13 @@ typedef struct Vector2 {
 	float X, Y;
 } Vector2;
 
+inline Vector2 vector2_create(float x, float y) {
+	Vector2 f;
+	f.X = x;
+	f.Y = y;
+	return f;
+}
+
 inline Vector2 vector2_zero() {
 	Vector2 res = { 0.0f, 0.0f };
 	return res;
