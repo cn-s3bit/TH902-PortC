@@ -14,7 +14,7 @@ void sdlex_enable_fallback_software(SDL_Window * targetWindow) {
 	software_fallback_state.IsEnabled = 1;
 	software_fallback_state.TargetWindow = targetWindow;
 	software_fallback_state.TargetSurface = SDL_GetWindowSurface(targetWindow);
-	software_fallback_state.SoftwareRenderer = SDL_CreateRenderer(software_fallback_state.TargetWindow, -1, 2);
+	software_fallback_state.SoftwareRenderer = SDL_CreateSoftwareRenderer(software_fallback_state.TargetSurface);
 }
 
 void sdlex_software_clear() {
@@ -40,7 +40,7 @@ void sdlex_software_flush() {
 
 void sdlex_software_endframe() {
 	SDL_RenderPresent(software_fallback_state.SoftwareRenderer);
-	// SDL_UpdateWindowSurface(software_fallback_state.TargetWindow);
+	SDL_UpdateWindowSurface(software_fallback_state.TargetWindow);
 }
 
 int sdlex_software_render_texture(SDL_Rect target) {
