@@ -61,6 +61,7 @@ int main(int argc, char ** argv) {
 			SDL_Rect p1 = { 0, 0, 24, 24 };
 			SDL_Rect p2 = { 0, 0, 24, 24 };
 			p1.x += t + i;
+			sdlex_set_blend_mode(SDLEX_BLEND_MODE_ADDITIVE);
 			sdlex_render_texture(imageid, p1);
 			sdlex_render_texture_region_ex(imageid,
 				vector2_scl(vector2_one(), (float)t),

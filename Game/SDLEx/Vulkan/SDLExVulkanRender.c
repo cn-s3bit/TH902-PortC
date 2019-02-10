@@ -3,6 +3,8 @@
 #include "../MathEx/MathEx.h"
 #include "../Utils/ArrayList.h"
 
+enum BlendMode SDLExBlendMode = SDLEX_BLEND_MODE_ALPHABLEND;
+
 Vertex Vertices[6] = {
 	{ { 0.25f, -1.0f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f } },
 	{ { 0.25f, 1.0f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 1.0f } },
@@ -20,6 +22,10 @@ ArrayList * batch_buffer;
 	if (batch_buffer == NULL) {\
 		batch_buffer = create_array_list(sizeof(Vertices), 16u);\
 	}
+
+void sdlex_set_blend_mode(enum BlendMode mode) {
+	SDLExBlendMode = mode;
+}
 
 unsigned sdlex_begin_frame() {
 	VKRENDER_GLOBALS_INIT
@@ -198,7 +204,7 @@ void sdlex_render_flush(unsigned imageIndex) {
 
 	vkCmdBeginRenderPass(swapchain->CommandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
-	vkCmdBindPipeline(swapchain->CommandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline->GraphicsPipeline);
+	vkCmdBindPipeline(swapchain->CommandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline->GraphicsPipeline[(int)SDLExBlendMode]);
 
 	VkBuffer buffer = get_vk_vertex_buffer();
 	VkDeviceSize offset = 0;
@@ -248,7 +254,7 @@ void sdlex_render_init(SDLExVulkanSwapChain * swapchain, SDLExVulkanGraphicsPipe
 
 		vkCmdBeginRenderPass(swapchain->CommandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
-		vkCmdBindPipeline(swapchain->CommandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline->GraphicsPipeline);
+		vkCmdBindPipeline(swapchain->CommandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline->GraphicsPipeline[0]);
 
 		if (clear) {
 			VkClearAttachment clearatt;

@@ -15,7 +15,7 @@ typedef struct SDLExVulkanSwapChain {
 typedef struct SDLExVulkanGraphicsPipeline {
 	VkPipelineLayout PipelineLayout;
 	VkRenderPass RenderPass;
-	VkPipeline GraphicsPipeline;
+	VkPipeline GraphicsPipeline[2];
 	VkFramebuffer * FrameBuffers;
 	VkDescriptorSet * DescriptorSets;
 } SDLExVulkanGraphicsPipeline;
@@ -25,6 +25,11 @@ typedef struct Vertex {
 	Vector3 Color;
 	Vector2 TexCoord;
 } Vertex;
+
+enum BlendMode {
+	SDLEX_BLEND_MODE_ALPHABLEND = 0,
+	SDLEX_BLEND_MODE_ADDITIVE = 1
+};
 
 typedef struct SwapChainSupportDetails {
 	unsigned formatCount, presentModeCount;
@@ -86,6 +91,7 @@ void sdlex_render_flush(unsigned imageIndex);
 void sdlex_render_texture(unsigned imageIndex, SDL_Rect target);
 void sdlex_render_texture_ex(unsigned imageIndex, Vector2 position, Vector2 origin, float rotation, Vector2 scale);
 void sdlex_render_texture_region_ex(unsigned imageIndex, Vector2 position, Vector2 origin, float rotation, Vector2 scale, SDL_Rect sourceRegion);
+void sdlex_set_blend_mode(enum BlendMode mode);
 void sdlex_end_frame(unsigned imageIndex);
 
 
