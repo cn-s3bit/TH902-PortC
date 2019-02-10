@@ -88,13 +88,14 @@ static SDL_bool _sdlex_vulkan_check_device_extension_support(VkPhysicalDevice de
 	return got == 1 ? SDL_TRUE : SDL_FALSE;
 }
 
-static void _sdlex_vulkan_pick_physical_device(void) {
+static void _sdlex_vulkan_pick_physical_device(SDL_Window * window) {
 	unsigned deviceCount = 0;
 	vkEnumeratePhysicalDevices(VulkanInstance, &deviceCount, NULL);
 	if (deviceCount == 0) {
 		SDL_LogError(SDL_LOG_CATEGORY_CUSTOM,
 			"Failed to find any GPU that supports Vulkan!\n"
 		);
+		sdlex_enable_fallback_software(window);
 		return;
 	}
 
@@ -132,6 +133,7 @@ static void _sdlex_vulkan_pick_physical_device(void) {
 		SDL_LogError(SDL_LOG_CATEGORY_CUSTOM,
 			"No Device Supported!\n"
 		);
+		sdlex_enable_fallback_software(window);
 		free(devices);
 		return;
 	}
@@ -139,7 +141,7 @@ static void _sdlex_vulkan_pick_physical_device(void) {
 	free(devices);
 }
 
-static void _sdlex_vulkan_create_virtual_device(void) {
+static void _sdlex_vulkan_create_virtual_device(SDL_Window * window) {
 	VkDeviceQueueCreateInfo queueCreateInfo = { .sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO };
 	queueCreateInfo.queueFamilyIndex = find_queue_families(VulkanPhysicalDevice, VK_QUEUE_GRAPHICS_BIT);
 	queueCreateInfo.queueCount = 1;
@@ -159,6 +161,7 @@ static void _sdlex_vulkan_create_virtual_device(void) {
 			"Failed to create virtual device: vkCreateDevice returns %d\n",
 			ret
 		);
+		sdlex_enable_fallback_software(window);
 		return;
 	}
 	vkGetDeviceQueue(VulkanVirualDevice, queueCreateInfo.queueFamilyIndex, 0, &VulkanGraphicsQueue);
@@ -299,7 +302,7 @@ static void _sdlex_vulkan_create_swap_chain(SDL_Window * window) {
 }
 
 VkInstance initialize_vulkan(SDL_Window * window, unsigned appVer) {
-	unsigned count;
+	unsigned count = 1;
 	if (!SDL_Vulkan_GetInstanceExtensions(window, &count, NULL))
 		SDL_LogError(SDL_LOG_CATEGORY_CUSTOM,
 			"Failed to get vulkan extension count for SDL: %s\n",
@@ -308,11 +311,14 @@ VkInstance initialize_vulkan(SDL_Window * window, unsigned appVer) {
 
 	char ** extensions = (char **) malloc(count * sizeof(char *));
 
-	if (!SDL_Vulkan_GetInstanceExtensions(window, &count, extensions))
+	if (!SDL_Vulkan_GetInstanceExtensions(window, &count, extensions)) {
 		SDL_LogError(SDL_LOG_CATEGORY_CUSTOM,
 			"Failed to get vulkan extensions for SDL: %s\n",
 			SDL_GetError()
 		);
+		sdlex_enable_fallback_software(window);
+		return VK_NULL_HANDLE;
+	}
 
 	VkApplicationInfo appInfo = {
 		.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO,
@@ -339,22 +345,28 @@ VkInstance initialize_vulkan(SDL_Window * window, unsigned appVer) {
 #endif
 
 	int createResult = vkCreateInstance(&createInfo, NULL, &VulkanInstance);
-	if (createResult != VK_SUCCESS)
+	if (createResult != VK_SUCCESS) {
 		SDL_LogError(SDL_LOG_CATEGORY_CUSTOM,
 			"Failed to initialize vulkan: vkCreateInstance returns %d\n",
 			createResult
 		);
+		sdlex_enable_fallback_software(window);
+		return VK_NULL_HANDLE;
+	}
 
 	free(extensions);
 	
-	if (!SDL_Vulkan_CreateSurface(window, VulkanInstance, &VulkanSurface))
+	if (!SDL_Vulkan_CreateSurface(window, VulkanInstance, &VulkanSurface)) {
 		SDL_LogError(SDL_LOG_CATEGORY_CUSTOM,
 			"Failed to get vulkan extensions for SDL: %s\n",
 			SDL_GetError()
 		);
+		sdlex_enable_fallback_software(window);
+		return VK_NULL_HANDLE;
+	}
 
-	_sdlex_vulkan_pick_physical_device();
-	_sdlex_vulkan_create_virtual_device();
+	_sdlex_vulkan_pick_physical_device(window);
+	_sdlex_vulkan_create_virtual_device(window);
 
 	_sdlex_vulkan_create_swap_chain(window);
 	create_command_buffer(&VulkanSwapChain);

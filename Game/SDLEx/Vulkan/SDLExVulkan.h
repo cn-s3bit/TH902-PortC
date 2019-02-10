@@ -26,6 +26,14 @@ typedef struct Vertex {
 	Vector2 TexCoord;
 } Vertex;
 
+typedef struct SoftwareFallbackState {
+	int IsEnabled;
+	SDL_Window * TargetWindow;
+	SDL_Surface * TargetSurface;
+	SDL_Renderer * SoftwareRenderer;
+	SDL_Texture * ActiveTexture;
+} SoftwareFallbackState;
+
 enum BlendMode {
 	SDLEX_BLEND_MODE_ALPHABLEND = 0,
 	SDLEX_BLEND_MODE_ADDITIVE = 1
@@ -78,6 +86,7 @@ void copy_buffer_to_image(VkBuffer buffer, VkImage image, unsigned width, unsign
 long load_texture2d(const char * filename);
 void dispose_texture2d(long texture_id);
 void bind_texture2d(unsigned imageIndex, long texture_id);
+void bind_all_images_texture2d(long texture_id);
 VkImageCreateInfo get_texture2d_info(long textureId);
 
 void create_descriptor_pool();
@@ -94,6 +103,15 @@ void sdlex_render_texture_ex(unsigned imageIndex, Vector2 position, Vector2 orig
 void sdlex_render_texture_region_ex(unsigned imageIndex, Vector2 position, Vector2 origin, float rotation, Vector2 scale, Vector4 color, SDL_Rect sourceRegion);
 void sdlex_set_blend_mode(enum BlendMode mode);
 void sdlex_end_frame(unsigned imageIndex);
+
+void sdlex_software_clear();
+void sdlex_enable_fallback_software(SDL_Window * targetWindow);
+void sdlex_software_set_blend_mode(enum BlendMode mode);
+void sdlex_software_flush();
+void sdlex_software_endframe();
+int sdlex_software_render_texture_region_ex(Vector2 position, Vector2 origin, float rotation, Vector2 scale, Vector4 color, SDL_Rect * sourceRegion);
+int sdlex_software_render_texture(SDL_Rect target);
+int sdlex_is_software_fallback_enabled();
 
 
 inline VkVertexInputBindingDescription _sdlex_get_binding_description(void) {

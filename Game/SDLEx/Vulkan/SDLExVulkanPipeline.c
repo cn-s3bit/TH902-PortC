@@ -3,6 +3,7 @@
 
 SDLExVulkanGraphicsPipeline VulkanPipeline;
 VkDescriptorSetLayout VulkanDescriptorSetLayout;
+extern SoftwareFallbackState software_fallback_state;
 SDLExVulkanGraphicsPipeline * get_vk_pipeline(void) {
 	return &VulkanPipeline;
 }
@@ -24,6 +25,7 @@ VkShaderModule create_shader_module(char * code, size_t codeSize) {
 }
 
 VkPipeline create_graphics_pipeline_f(const char * vertShaderFilename, const char * fragShaderFilename) {
+	if (software_fallback_state.IsEnabled) return VK_NULL_HANDLE;
 	size_t size;
 	char * vert = read_file_to_char_array(vertShaderFilename, &size);
 	VkShaderModule vertShader = create_shader_module(vert, size);
@@ -108,6 +110,7 @@ static void _sdlex_prepare_pipeline(void) {
 }
 
 VkPipeline create_graphics_pipeline(VkShaderModule vertShaderModule, VkShaderModule fragShaderModule) {
+	if (software_fallback_state.IsEnabled) return VK_NULL_HANDLE;
 	_sdlex_prepare_pipeline();
 	VkPipelineShaderStageCreateInfo vertShaderStageInfo = {
 		.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO,
@@ -261,7 +264,7 @@ VkPipeline create_graphics_pipeline(VkShaderModule vertShaderModule, VkShaderMod
 	free(att);
 	vkDestroyShaderModule(get_vk_device(), fragShaderModule, NULL);
 	vkDestroyShaderModule(get_vk_device(), vertShaderModule, NULL);
-	return VulkanPipeline.GraphicsPipeline;
+	return VulkanPipeline.GraphicsPipeline[0];
 }
 
 void cleanup_vulkan_pipeline(void) {

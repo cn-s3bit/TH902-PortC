@@ -1,5 +1,7 @@
 #include "SDLExVulkan.h"
 #include "../Utils/HashMap.h"
+typedef SDL_Texture * SDL_TexturePt;
+extern SoftwareFallbackState software_fallback_state;
 
 void sdlex_free_image(void * pt) {
 	vkDestroyImage(get_vk_device(), *(VkImage *)pt, NULL);
@@ -23,8 +25,9 @@ CODEGEN_CUCKOO_HASHMAP(texmemorymap, long, VkDeviceMemory, sdlex_hash_int, sdlex
 CODEGEN_CUCKOO_HASHMAP(texviewmap, long, VkImageView, sdlex_hash_int, sdlex_equal_int, memorypool_free_4bytes, sdlex_free_imageview)
 CODEGEN_CUCKOO_HASHMAP(texsamplermap, long, VkSampler, sdlex_hash_int, sdlex_equal_int, memorypool_free_4bytes, sdlex_free_sampler)
 CODEGEN_CUCKOO_HASHMAP(texinfomap, long, VkImageCreateInfo, sdlex_hash_int, sdlex_equal_int, memorypool_free_4bytes, free)
+CODEGEN_CUCKOO_HASHMAP(softwaretexmap, long, SDL_TexturePt, sdlex_hash_int, sdlex_equal_int, memorypool_free_4bytes, free)
 
-CuckooHashMap * texture_images, * texture_memories, * texture_views, * texture_samplers, * texture_infos;
+CuckooHashMap * texture_images, * texture_memories, * texture_views, * texture_samplers, * texture_infos, * software_textures;
 long next_image_id = 0;
 
 SDL_Rect texture_frame(SDL_Texture * texture) {
@@ -212,11 +215,19 @@ long load_texture2d(const char * filename) {
 		texture_views = create_texviewmap();
 		texture_samplers = create_texsamplermap();
 		texture_infos = create_texinfomap();
+		software_textures = create_softwaretexmap();
 	}
 	SDL_Surface * raw = IMG_Load(filename);
 	if (!raw) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to Load Texture2D: %s", SDL_GetError());
 		return -1;
+	}
+	if (software_fallback_state.IsEnabled) {
+		SDL_TexturePt texture = SDL_CreateTextureFromSurface(software_fallback_state.SoftwareRenderer, raw);
+		SDL_FreeSurface(raw);
+		++next_image_id;
+		put_softwaretexmap(software_textures, next_image_id, texture);
+		return next_image_id;
 	}
 
 	VkDeviceSize imageSize = raw->w * raw->h * raw->format->BytesPerPixel;
@@ -253,9 +264,22 @@ long load_texture2d(const char * filename) {
 	return next_image_id;
 }
 
+void bind_all_images_texture2d(long texture_id) {
+	if (software_fallback_state.IsEnabled) {
+		software_fallback_state.ActiveTexture = get_softwaretexmap(software_textures, texture_id);
+		return;
+	}
+	for (unsigned m = 0; m < get_vk_swap_chain()->ImageCount; m++)
+		bind_texture2d(m, texture_id);
+}
+
 void bind_texture2d(unsigned imageIndex, long texture_id) {
 	if (texture_id < 0 || texture_id > next_image_id) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Invalid texture_id: %d", texture_id);
+		return;
+	}
+	if (software_fallback_state.IsEnabled) {
+		software_fallback_state.ActiveTexture = get_softwaretexmap(software_textures, texture_id);
 		return;
 	}
 	sdlex_render_flush(imageIndex);
@@ -268,6 +292,10 @@ VkImageCreateInfo get_texture2d_info(long textureId) {
 }
 
 void dispose_texture2d(long texture_id) {
+	if (software_fallback_state.IsEnabled) {
+		remove_from_softwaretexmap(software_textures, texture_id);
+		return;
+	}
 	remove_from_texviewmap(texture_views, texture_id);
 	remove_from_texsamplermap(texture_samplers, texture_id);
 	remove_from_texinfomap(texture_infos, texture_id);

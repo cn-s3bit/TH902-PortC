@@ -18,16 +18,24 @@ VkSemaphore imageAvailableSemaphore;
 VkFence the_fence = VK_NULL_HANDLE;
 ArrayList * batch_buffer;
 
+extern SoftwareFallbackState software_fallback_state;
+
 #define VKRENDER_GLOBALS_INIT \
 	if (batch_buffer == NULL) {\
 		batch_buffer = create_array_list(sizeof(Vertices), 16u);\
 	}
 
 void sdlex_set_blend_mode(enum BlendMode mode) {
+	if (software_fallback_state.IsEnabled)
+		sdlex_software_set_blend_mode(mode);
 	SDLExBlendMode = mode;
 }
 
 unsigned sdlex_begin_frame() {
+	if (software_fallback_state.IsEnabled) {
+		sdlex_render_init(NULL, NULL, 1);
+		return -1;
+	}
 	VKRENDER_GLOBALS_INIT
 	VkDevice device = get_vk_device();
 	SDLExVulkanSwapChain * swapchain = get_vk_swap_chain();
@@ -55,10 +63,18 @@ unsigned sdlex_begin_frame() {
 
 void sdlex_render_texture(unsigned imageIndex, SDL_Rect target) {
 	// TODO: Image Specificated Batching
+	if (software_fallback_state.IsEnabled) {
+		sdlex_software_render_texture(target);
+		return;
+	}
 	VKRENDER_GLOBALS_INIT
 	VkExtent2D screenSize = get_vk_swap_chain()->SwapChainInfo.imageExtent;
 #define MAP_POS_TO_VIEWPORT_X(val) sdlex_map_float((float)val, 0.0f, (float)screenSize.width, -1.0f, 1.0f)
 #define MAP_POS_TO_VIEWPORT_Y(val) sdlex_map_float((float)val, 0.0f, (float)screenSize.height, -1.0f, 1.0f)
+	Vertices[0].TexCoord.X = Vertices[1].TexCoord.X = Vertices[3].TexCoord.X = 0.0f;
+	Vertices[2].TexCoord.X = Vertices[4].TexCoord.X = Vertices[5].TexCoord.X = 1.0f;
+	Vertices[0].TexCoord.Y = Vertices[3].TexCoord.Y = Vertices[4].TexCoord.Y = 0.0f;
+	Vertices[1].TexCoord.Y = Vertices[2].TexCoord.Y = Vertices[5].TexCoord.Y = 1.0f;
 	Vertices[0].Pos.X = Vertices[1].Pos.X = Vertices[3].Pos.X = MAP_POS_TO_VIEWPORT_X(target.x);
 	Vertices[2].Pos.X = Vertices[4].Pos.X = Vertices[5].Pos.X = MAP_POS_TO_VIEWPORT_X(target.x + target.w);
 	Vertices[0].Pos.Y = Vertices[3].Pos.Y = Vertices[4].Pos.Y = MAP_POS_TO_VIEWPORT_Y(target.y);
@@ -76,11 +92,19 @@ void sdlex_render_texture(unsigned imageIndex, SDL_Rect target) {
 }
 
 void sdlex_render_texture_ex(unsigned imageIndex, Vector2 position, Vector2 origin, float rotation, Vector2 scale, Vector4 color) {
+	if (software_fallback_state.IsEnabled) {
+		sdlex_software_render_texture_region_ex(position, origin, rotation, scale, color, NULL);
+		return;
+	}
 	VKRENDER_GLOBALS_INIT
 		VkExtent2D screenSize = get_vk_swap_chain()->SwapChainInfo.imageExtent;
 	VkImageCreateInfo * currentTextureInfo = sdlex_get_current_texture_info(imageIndex);
 	Vector2 leftBottom = vector2_sub(position, origin);
 	Vector2 rightUpper = vector2_adds(leftBottom, (float)currentTextureInfo->extent.width, (float)currentTextureInfo->extent.height);
+	Vertices[0].TexCoord.X = Vertices[1].TexCoord.X = Vertices[3].TexCoord.X = 0.0f;
+	Vertices[2].TexCoord.X = Vertices[4].TexCoord.X = Vertices[5].TexCoord.X = 1.0f;
+	Vertices[0].TexCoord.Y = Vertices[3].TexCoord.Y = Vertices[4].TexCoord.Y = 0.0f;
+	Vertices[1].TexCoord.Y = Vertices[2].TexCoord.Y = Vertices[5].TexCoord.Y = 1.0f;
 	leftBottom = vector2_sub(leftBottom, position);
 	rightUpper = vector2_sub(rightUpper, position);
 	leftBottom.X *= scale.X;
@@ -127,6 +151,10 @@ void sdlex_render_texture_ex(unsigned imageIndex, Vector2 position, Vector2 orig
 }
 
 void sdlex_render_texture_region_ex(unsigned imageIndex, Vector2 position, Vector2 origin, float rotation, Vector2 scale, Vector4 color, SDL_Rect sourceRegion) {
+	if (software_fallback_state.IsEnabled) {
+		sdlex_software_render_texture_region_ex(position, origin, rotation, scale, color, &sourceRegion);
+		return;
+	}
 	VKRENDER_GLOBALS_INIT
 		VkExtent2D screenSize = get_vk_swap_chain()->SwapChainInfo.imageExtent;
 	Vector2 leftBottom = vector2_sub(position, origin);
@@ -183,6 +211,10 @@ void sdlex_render_texture_region_ex(unsigned imageIndex, Vector2 position, Vecto
 
 void sdlex_end_frame(unsigned imageIndex) {
 	sdlex_render_flush(imageIndex);
+	if (software_fallback_state.IsEnabled) {
+		sdlex_software_endframe();
+		return;
+	}
 	VkPresentInfoKHR presentInfo = { .sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR };
 	VkSwapchainKHR * swapChains = &get_vk_swap_chain()->SwapChain;
 	presentInfo.swapchainCount = 1;
@@ -195,6 +227,10 @@ void sdlex_end_frame(unsigned imageIndex) {
 }
 
 void sdlex_render_flush(unsigned imageIndex) {
+	if (software_fallback_state.IsEnabled) {
+		sdlex_software_flush();
+		return;
+	}
 	VKRENDER_GLOBALS_INIT
 	if (batch_buffer->Size == 0)
 		return;
@@ -251,6 +287,12 @@ void sdlex_render_flush(unsigned imageIndex) {
 }
 
 void sdlex_render_init(SDLExVulkanSwapChain * swapchain, SDLExVulkanGraphicsPipeline * pipeline, int clear) {
+	if (software_fallback_state.IsEnabled) {
+		if (clear) {
+			sdlex_software_clear();
+		}
+		return;
+	}
 	for (size_t i = 0; i < swapchain->ImageCount; i++) {
 		VkCommandBufferBeginInfo beginInfo = { .sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO };
 		beginInfo.flags = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT;
