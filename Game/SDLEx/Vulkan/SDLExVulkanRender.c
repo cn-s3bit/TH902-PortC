@@ -6,12 +6,12 @@
 enum BlendMode SDLExBlendMode = SDLEX_BLEND_MODE_ALPHABLEND;
 
 Vertex Vertices[6] = {
-	{ { 0.25f, -1.0f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f } },
-	{ { 0.25f, 1.0f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 1.0f } },
-	{ { 0.9f, 1.0f }, { 1.0f, 1.0f, 1.0f }, { 1.0f, 1.0f } },
-	{ { 0.25f, -1.0f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f } },
-	{ { 0.9f, -1.0f }, { 1.0f, 1.0f, 1.0f }, { 1.0f, 0.0f } },
-	{ { 0.9f, 1.0f }, { 1.0f, 1.0f, 1.0f }, { 1.0f, 1.0f } },
+	{ { 0.25f, -1.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f } },
+	{ { 0.25f, 1.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }, { 0.0f, 1.0f } },
+	{ { 0.9f, 1.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }, { 1.0f, 1.0f } },
+	{ { 0.25f, -1.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f } },
+	{ { 0.9f, -1.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }, { 1.0f, 0.0f } },
+	{ { 0.9f, 1.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }, { 1.0f, 1.0f } },
 };
 
 VkSemaphore imageAvailableSemaphore;
@@ -65,10 +65,17 @@ void sdlex_render_texture(unsigned imageIndex, SDL_Rect target) {
 	Vertices[1].Pos.Y = Vertices[2].Pos.Y = Vertices[5].Pos.Y = MAP_POS_TO_VIEWPORT_Y(target.y + target.h);
 #undef MAP_POS_TO_VIEWPORT_X
 #undef MAP_POS_TO_VIEWPORT_Y
+	Vector4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
+	Vertices[0].Color = color;
+	Vertices[1].Color = color;
+	Vertices[2].Color = color;
+	Vertices[3].Color = color;
+	Vertices[4].Color = color;
+	Vertices[5].Color = color;
 	append_array_list(batch_buffer, Vertices);
 }
 
-void sdlex_render_texture_ex(unsigned imageIndex, Vector2 position, Vector2 origin, float rotation, Vector2 scale) {
+void sdlex_render_texture_ex(unsigned imageIndex, Vector2 position, Vector2 origin, float rotation, Vector2 scale, Vector4 color) {
 	VKRENDER_GLOBALS_INIT
 		VkExtent2D screenSize = get_vk_swap_chain()->SwapChainInfo.imageExtent;
 	VkImageCreateInfo * currentTextureInfo = sdlex_get_current_texture_info(imageIndex);
@@ -110,10 +117,16 @@ void sdlex_render_texture_ex(unsigned imageIndex, Vector2 position, Vector2 orig
 	Vertices[5].Pos.Y = MAP_POS_TO_VIEWPORT_Y(Vertices[5].Pos.Y);
 #undef MAP_POS_TO_VIEWPORT_X
 #undef MAP_POS_TO_VIEWPORT_Y
+	Vertices[0].Color = color;
+	Vertices[1].Color = color;
+	Vertices[2].Color = color;
+	Vertices[3].Color = color;
+	Vertices[4].Color = color;
+	Vertices[5].Color = color;
 	append_array_list(batch_buffer, Vertices);
 }
 
-void sdlex_render_texture_region_ex(unsigned imageIndex, Vector2 position, Vector2 origin, float rotation, Vector2 scale, SDL_Rect sourceRegion) {
+void sdlex_render_texture_region_ex(unsigned imageIndex, Vector2 position, Vector2 origin, float rotation, Vector2 scale, Vector4 color, SDL_Rect sourceRegion) {
 	VKRENDER_GLOBALS_INIT
 		VkExtent2D screenSize = get_vk_swap_chain()->SwapChainInfo.imageExtent;
 	Vector2 leftBottom = vector2_sub(position, origin);
@@ -157,6 +170,12 @@ void sdlex_render_texture_region_ex(unsigned imageIndex, Vector2 position, Vecto
 	Vertices[3].Pos.Y = MAP_POS_TO_VIEWPORT_Y(Vertices[3].Pos.Y);
 	Vertices[4].Pos.Y = MAP_POS_TO_VIEWPORT_Y(Vertices[4].Pos.Y);
 	Vertices[5].Pos.Y = MAP_POS_TO_VIEWPORT_Y(Vertices[5].Pos.Y);
+	Vertices[0].Color = color;
+	Vertices[1].Color = color;
+	Vertices[2].Color = color;
+	Vertices[3].Color = color;
+	Vertices[4].Color = color;
+	Vertices[5].Color = color;
 #undef MAP_POS_TO_VIEWPORT_X
 #undef MAP_POS_TO_VIEWPORT_Y
 	append_array_list(batch_buffer, Vertices);

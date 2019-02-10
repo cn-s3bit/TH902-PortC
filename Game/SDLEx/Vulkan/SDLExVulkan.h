@@ -22,7 +22,7 @@ typedef struct SDLExVulkanGraphicsPipeline {
 
 typedef struct Vertex {
 	Vector2 Pos;
-	Vector3 Color;
+	Vector4 Color;
 	Vector2 TexCoord;
 } Vertex;
 
@@ -78,6 +78,7 @@ void copy_buffer_to_image(VkBuffer buffer, VkImage image, unsigned width, unsign
 long load_texture2d(const char * filename);
 void dispose_texture2d(long texture_id);
 void bind_texture2d(unsigned imageIndex, long texture_id);
+VkImageCreateInfo get_texture2d_info(long textureId);
 
 void create_descriptor_pool();
 void create_descriptor_sets();
@@ -89,8 +90,8 @@ unsigned sdlex_begin_frame();
 void sdlex_render_init(SDLExVulkanSwapChain * swapchain, SDLExVulkanGraphicsPipeline * pipeline, int clear);
 void sdlex_render_flush(unsigned imageIndex);
 void sdlex_render_texture(unsigned imageIndex, SDL_Rect target);
-void sdlex_render_texture_ex(unsigned imageIndex, Vector2 position, Vector2 origin, float rotation, Vector2 scale);
-void sdlex_render_texture_region_ex(unsigned imageIndex, Vector2 position, Vector2 origin, float rotation, Vector2 scale, SDL_Rect sourceRegion);
+void sdlex_render_texture_ex(unsigned imageIndex, Vector2 position, Vector2 origin, float rotation, Vector2 scale, Vector4 color);
+void sdlex_render_texture_region_ex(unsigned imageIndex, Vector2 position, Vector2 origin, float rotation, Vector2 scale, Vector4 color, SDL_Rect sourceRegion);
 void sdlex_set_blend_mode(enum BlendMode mode);
 void sdlex_end_frame(unsigned imageIndex);
 
@@ -112,7 +113,7 @@ inline VkVertexInputAttributeDescription * _sdlex_get_attribute_descriptions(voi
 	attributeDescriptions[0].offset = offsetof(Vertex, Pos);
 	attributeDescriptions[1].binding = 0;
 	attributeDescriptions[1].location = 1;
-	attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
+	attributeDescriptions[1].format = VK_FORMAT_R32G32B32A32_SFLOAT;
 	attributeDescriptions[1].offset = offsetof(Vertex, Color);
 	attributeDescriptions[2].binding = 0;
 	attributeDescriptions[2].location = 2;

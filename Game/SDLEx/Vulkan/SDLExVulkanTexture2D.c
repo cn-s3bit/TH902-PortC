@@ -263,6 +263,10 @@ void bind_texture2d(unsigned imageIndex, long texture_id) {
 	sdlex_render_init(get_vk_swap_chain(), get_vk_pipeline(), 0);
 }
 
+VkImageCreateInfo get_texture2d_info(long textureId) {
+	return get_texinfomap(texture_infos, textureId);
+}
+
 void dispose_texture2d(long texture_id) {
 	remove_from_texviewmap(texture_views, texture_id);
 	remove_from_texsamplermap(texture_samplers, texture_id);
