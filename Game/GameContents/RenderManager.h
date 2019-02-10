@@ -27,7 +27,7 @@ typedef struct TextureRegion {
 typedef struct Renderable {
 	TextureRegion TextureRegion;
 	// _internalId should not be changed as long as the Renderable is registered
-	long long _internalId;
+	unsigned _internalId;
 	// Layer should not be changed as long as the Renderable is registered
 	enum RenderLayer Layer;
 	Vector4 Color;
