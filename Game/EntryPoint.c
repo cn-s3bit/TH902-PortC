@@ -67,7 +67,7 @@ int main(int argc, char ** argv) {
 				vector2_scl(vector2_one(), (float)t),
 				vector2_adds(vector2_zero(), 200, 400),
 				1.0f * (float)(t + i),
-				vector2_scl(vector2_one(), 0.4f), p2);
+				vector2_scl(vector2_one(), 0.4f), vector4_create(0.0f, 1.0f, 1.0f, 0.3f), p2);
 		}
 		sdlex_end_frame(imageid);
 		SDL_Log("%d", clock() - b);

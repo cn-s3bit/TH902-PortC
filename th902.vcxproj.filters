@@ -37,6 +37,9 @@
     <Filter Include="Source Files\SDLEx\MathEx">
       <UniqueIdentifier>{a21b1ad1-bd41-4b62-b71c-9c144683541f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GameContents">
+      <UniqueIdentifier>{c8a997ed-a14a-4f28-9d51-edf640e2adf0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VCSDL\include\SDL_vulkan.h">
@@ -333,6 +336,12 @@
     <ClInclude Include="Game\SDLEx\MathEx\Vector2.h">
       <Filter>Source Files\SDLEx\MathEx</Filter>
     </ClInclude>
+    <ClInclude Include="Game\GameContents\RenderManager.h">
+      <Filter>Source Files\GameContents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\SDLEx\MathEx\Vector4.h">
+      <Filter>Source Files\SDLEx\MathEx</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="VCSDL\lib\win32\SDL2main.lib">
@@ -436,6 +445,9 @@
     </ClCompile>
     <ClCompile Include="Game\SDLEx\Vulkan\SDLExVulkanUniform.c">
       <Filter>Source Files\SDLEx\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameContents\RenderManager.c">
+      <Filter>Source Files\GameContents</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

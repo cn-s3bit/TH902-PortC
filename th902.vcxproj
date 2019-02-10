@@ -20,10 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Constants.h" />
+    <ClInclude Include="Game\GameContents\RenderManager.h" />
     <ClInclude Include="Game\SDLEx\MathEx\MathEx.h" />
     <ClInclude Include="Game\SDLEx\MathEx\MathExConsts.h" />
     <ClInclude Include="Game\SDLEx\MathEx\Vector2.h" />
     <ClInclude Include="Game\SDLEx\MathEx\Vector3.h" />
+    <ClInclude Include="Game\SDLEx\MathEx\Vector4.h" />
     <ClInclude Include="Game\SDLEx\SDLWithPlugins.h" />
     <ClInclude Include="Game\SDLEx\Utils\ArrayList.h" />
     <ClInclude Include="Game\SDLEx\Utils\Deque.h" />
@@ -204,6 +206,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\EntryPoint.c" />
+    <ClCompile Include="Game\GameContents\RenderManager.c" />
     <ClCompile Include="Game\SDLEx\Utils\ArrayList.c" />
     <ClCompile Include="Game\SDLEx\Utils\Deque.c" />
     <ClCompile Include="Game\SDLEx\Utils\FileUtils.c" />
