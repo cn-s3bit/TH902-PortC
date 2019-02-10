@@ -39,7 +39,7 @@ int main(int argc, char ** argv) {
 	if (argc > 0)
 		SDL_Log("Working Path: %s\n", argv[0]);
 	init_sdl();
-	SDL_Window * window = SDL_CreateWindow("TH902", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 960, 720, SDL_WINDOW_VULKAN);
+	SDL_Window * window = SDL_CreateWindow("TH902", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 960, 720, SDL_WINDOW_VULKAN | SDL_WINDOW_ALLOW_HIGHDPI);
 	SDL_Surface * icon = IMG_Load(RESOURCE_FOLDER "Game/Image/icon32.png");
 	SDL_SetWindowIcon(window, icon);
 	TTF_Font * testFont = TTF_OpenFont(DEFAULT_FONT_PATH, 32);
@@ -47,8 +47,7 @@ int main(int argc, char ** argv) {
 	initialize_vulkan(window, VK_MAKE_VERSION(0, 1, 0));
 	create_graphics_pipeline_f(RESOURCE_FOLDER "Shaders/default.vert.spv", RESOURCE_FOLDER "Shaders/default.frag.spv");
 	long texture_id = load_texture2d(RESOURCE_FOLDER "Game/Image/Barrages.png");
-	for (unsigned m = 0; m < get_vk_swap_chain()->ImageCount; m++)
-		bind_texture2d(m, texture_id);
+	bind_all_images_texture2d(texture_id);
 	int t = 0;
 	// Main Loop
 	while (1) {
@@ -58,16 +57,16 @@ int main(int argc, char ** argv) {
 		clock_t b = clock();
 		unsigned imageid = sdlex_begin_frame();
 		for (int i = 0; i < SDL_max(200 - t / 3, 1); i++) {
-			SDL_Rect p1 = { 0, 0, 24, 24 };
+			SDL_Rect p1 = { 77, -28, 24, 24 };
 			SDL_Rect p2 = { 0, 0, 24, 24 };
 			p1.x += t + i;
 			sdlex_set_blend_mode(SDLEX_BLEND_MODE_ADDITIVE);
 			sdlex_render_texture(imageid, p1);
 			sdlex_render_texture_region_ex(imageid,
-				vector2_scl(vector2_one(), (float)t),
-				vector2_adds(vector2_zero(), 200, 400),
+				vector2_add(vector2_rotate(vector2_scl(vector2_unitX(), 90), (float)(12 * i + t)), vector2_scl(vector2_one(), (float)t)),
+				vector2_adds(vector2_zero(), 12, 12),
 				1.0f * (float)(t + i),
-				vector2_scl(vector2_one(), 0.4f), vector4_create(0.0f, 1.0f, 1.0f, 0.3f), p2);
+				vector2_scl(vector2_one(), 1.0f), vector4_create(1.0f, 1.0f, 1.0f, 0.3f), p2);
 		}
 		sdlex_end_frame(imageid);
 		SDL_Log("%d", clock() - b);
@@ -76,10 +75,12 @@ int main(int argc, char ** argv) {
 
 LABEL_EXIT:
 	dispose_texture2d(texture_id);
-	vkDeviceWaitIdle(get_vk_device());
-	TTF_CloseFont(testFont);
-	cleanup_vulkan_pipeline();
-	cleanup_vulkan();
+	// TTF_CloseFont(testFont);
+	if (!sdlex_is_software_fallback_enabled()) {
+		vkDeviceWaitIdle(get_vk_device());
+		cleanup_vulkan_pipeline();
+		cleanup_vulkan();
+	}
 	// SDL_DestroyWindow(window);
 	cleanup_sdl();
 	printf("Press Enter to Exit...");

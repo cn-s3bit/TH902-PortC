@@ -440,14 +440,17 @@
     <ClCompile Include="Game\SDLEx\Vulkan\SDLExVulkanRender.c">
       <Filter>Source Files\SDLEx\Vulkan</Filter>
     </ClCompile>
-    <ClCompile Include="Game\SDLEx\Vulkan\SDLExVulkanTexture2D.c">
-      <Filter>Source Files\SDLEx\Vulkan</Filter>
-    </ClCompile>
     <ClCompile Include="Game\SDLEx\Vulkan\SDLExVulkanUniform.c">
       <Filter>Source Files\SDLEx\Vulkan</Filter>
     </ClCompile>
     <ClCompile Include="Game\GameContents\RenderManager.c">
       <Filter>Source Files\GameContents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\SDLEx\Vulkan\SDLExVulkanSoftwareFallback.c">
+      <Filter>Source Files\SDLEx\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\SDLEx\Vulkan\SDLExTexture2D.c">
+      <Filter>Source Files\SDLEx\Vulkan</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
