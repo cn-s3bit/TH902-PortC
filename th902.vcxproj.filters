@@ -1,0 +1,441 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Header Files\VCSDL">
+      <UniqueIdentifier>{7512b119-bcbb-4a1f-8737-31b1f601dc64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Static Libraries">
+      <UniqueIdentifier>{4e8a6d26-0329-40e4-a047-df87d7702d94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dynamic Libraries">
+      <UniqueIdentifier>{34fe0946-879a-463c-9fbb-580f6d89d143}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SDLEx">
+      <UniqueIdentifier>{15652935-b0ee-4e81-a4a9-2bf0ff4887a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SDLEx\Utils">
+      <UniqueIdentifier>{58fac6db-8b18-4e6d-a5b6-1b635821ae4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SDLEx\Vulkan">
+      <UniqueIdentifier>{6d26a58a-658c-438c-b17d-204fca647faf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SDLEx\Vulkan\Shaders">
+      <UniqueIdentifier>{bff04b46-0ff3-446a-921f-443bc405a49a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SDLEx\MathEx">
+      <UniqueIdentifier>{a21b1ad1-bd41-4b62-b71c-9c144683541f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="VCSDL\include\SDL_vulkan.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\begin_code.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\close_code.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_assert.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_atomic.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_audio.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_bits.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_blendmode.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_clipboard.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_config.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_config_android.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_config_iphoneos.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_config_macosx.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_config_minimal.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_config_pandora.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_config_psp.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_config_windows.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_config_winrt.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_config_wiz.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_copying.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_cpuinfo.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_egl.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_endian.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_error.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_events.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_filesystem.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_gamecontroller.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_gesture.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_haptic.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_hints.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_image.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_joystick.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_keyboard.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_keycode.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_loadso.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_log.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_main.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_messagebox.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_mouse.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_mutex.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_name.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_opengl.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_opengl_glext.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_opengles.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_opengles2.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_opengles2_gl2.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_opengles2_gl2ext.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_opengles2_gl2platform.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_opengles2_khrplatform.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_pixels.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_platform.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_power.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_quit.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_rect.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_render.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_revision.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_rwops.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_scancode.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_sensor.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_shape.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_stdinc.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_surface.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_system.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_syswm.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_test.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_test_assert.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_test_common.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_test_compare.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_test_crc32.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_test_font.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_test_fuzzer.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_test_harness.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_test_images.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_test_log.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_test_md5.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_test_memory.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_test_random.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_thread.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_timer.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_touch.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_ttf.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_types.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_version.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_video.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Constants.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\SDLEx\SDLWithPlugins.h">
+      <Filter>Source Files\SDLEx</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\SDLEx\Utils\MemoryPool.h">
+      <Filter>Source Files\SDLEx\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\SDLEx\Utils\ArrayList.h">
+      <Filter>Source Files\SDLEx\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\SDLEx\Utils\Deque.h">
+      <Filter>Source Files\SDLEx\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\SDLEx\Utils\FileUtils.h">
+      <Filter>Source Files\SDLEx\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\SDLEx\Utils\HashMap.h">
+      <Filter>Source Files\SDLEx\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\SDLEx\Utils\MathUtils.h">
+      <Filter>Source Files\SDLEx\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\SDLEx\Vulkan\SDLExVulkan.h">
+      <Filter>Source Files\SDLEx\Vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\SDLEx\MathEx\Vector3.h">
+      <Filter>Source Files\SDLEx\MathEx</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\SDLEx\MathEx\MathEx.h">
+      <Filter>Source Files\SDLEx\MathEx</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\SDLEx\MathEx\MathExConsts.h">
+      <Filter>Source Files\SDLEx\MathEx</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\SDLEx\MathEx\Vector2.h">
+      <Filter>Source Files\SDLEx\MathEx</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="VCSDL\lib\win32\SDL2main.lib">
+      <Filter>Static Libraries</Filter>
+    </Library>
+    <Library Include="VCSDL\lib\win32\SDL2.lib">
+      <Filter>Static Libraries</Filter>
+    </Library>
+    <Library Include="VCSDL\lib\win32\SDL2_image.lib">
+      <Filter>Static Libraries</Filter>
+    </Library>
+    <Library Include="VCSDL\lib\win32\SDL2_ttf.lib">
+      <Filter>Static Libraries</Filter>
+    </Library>
+    <Library Include="..\VulkanSDK\1.1.82.1\Lib32\vulkan-1.lib">
+      <Filter>Static Libraries</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="VCSDL\lib\win32\SDL2.dll">
+      <Filter>Dynamic Libraries</Filter>
+    </None>
+    <None Include="VCSDL\lib\win32\SDL2_image.dll">
+      <Filter>Dynamic Libraries</Filter>
+    </None>
+    <None Include="VCSDL\lib\win32\SDL2_ttf.dll">
+      <Filter>Dynamic Libraries</Filter>
+    </None>
+    <None Include="VCSDL\lib\win32\zlib1.dll">
+      <Filter>Dynamic Libraries</Filter>
+    </None>
+    <None Include="VCSDL\lib\win32\libfreetype-6.dll">
+      <Filter>Dynamic Libraries</Filter>
+    </None>
+    <None Include="VCSDL\lib\win32\libjpeg-9.dll">
+      <Filter>Dynamic Libraries</Filter>
+    </None>
+    <None Include="VCSDL\lib\win32\libpng16-16.dll">
+      <Filter>Dynamic Libraries</Filter>
+    </None>
+    <None Include="Game\SDLEx\Vulkan\Shaders\default.vert">
+      <Filter>Source Files\SDLEx\Vulkan\Shaders</Filter>
+    </None>
+    <None Include="Game\SDLEx\Vulkan\Shaders\compile.bat">
+      <Filter>Source Files\SDLEx\Vulkan\Shaders</Filter>
+    </None>
+    <None Include="Game\SDLEx\Vulkan\Shaders\default.frag">
+      <Filter>Source Files\SDLEx\Vulkan\Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="VCSDL\lib\win32\LICENSE.jpeg.txt">
+      <Filter>Dynamic Libraries</Filter>
+    </Text>
+    <Text Include="VCSDL\lib\win32\LICENSE.png.txt">
+      <Filter>Dynamic Libraries</Filter>
+    </Text>
+    <Text Include="VCSDL\lib\win32\LICENSE.zlib.txt">
+      <Filter>Dynamic Libraries</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Game\EntryPoint.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\SDLEx\Utils\ArrayList.c">
+      <Filter>Source Files\SDLEx\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\SDLEx\Utils\Deque.c">
+      <Filter>Source Files\SDLEx\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\SDLEx\Utils\FileUtils.c">
+      <Filter>Source Files\SDLEx\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\SDLEx\Utils\HashMap.c">
+      <Filter>Source Files\SDLEx\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\SDLEx\Utils\MemoryPool.c">
+      <Filter>Source Files\SDLEx\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\SDLEx\Vulkan\SDLExVulkanVertex.c">
+      <Filter>Source Files\SDLEx\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\SDLEx\Vulkan\SDLExVulkanCommandBuffer.c">
+      <Filter>Source Files\SDLEx\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\SDLEx\Vulkan\SDLExVulkanFrameBuffer.c">
+      <Filter>Source Files\SDLEx\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\SDLEx\Vulkan\SDLExVulkanInstance.c">
+      <Filter>Source Files\SDLEx\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\SDLEx\Vulkan\SDLExVulkanPipeline.c">
+      <Filter>Source Files\SDLEx\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\SDLEx\Vulkan\SDLExVulkanRender.c">
+      <Filter>Source Files\SDLEx\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\SDLEx\Vulkan\SDLExVulkanTexture2D.c">
+      <Filter>Source Files\SDLEx\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\SDLEx\Vulkan\SDLExVulkanUniform.c">
+      <Filter>Source Files\SDLEx\Vulkan</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
