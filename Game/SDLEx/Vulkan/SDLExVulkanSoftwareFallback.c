@@ -14,7 +14,7 @@ void sdlex_enable_fallback_software(SDL_Window * targetWindow) {
 	software_fallback_state.IsEnabled = 1;
 	software_fallback_state.TargetWindow = targetWindow;
 	software_fallback_state.TargetSurface = SDL_GetWindowSurface(targetWindow);
-	software_fallback_state.SoftwareRenderer = SDL_CreateRenderer(software_fallback_state.TargetWindow, -1, 0);
+	software_fallback_state.SoftwareRenderer = SDL_CreateRenderer(software_fallback_state.TargetWindow, -1, 2);
 }
 
 void sdlex_software_clear() {
