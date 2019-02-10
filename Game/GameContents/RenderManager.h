@@ -3,7 +3,7 @@
 #include "../SDLEx/SDLWithPlugins.h"
 #include "../SDLEx/MathEx/MathEx.h"
 enum RenderLayer {
-	RENDER_LAYER_BACKGROUND = 0,
+	RENDER_LAYER_BACKGROUND = 1,  // Background
 	RENDER_LAYER_ENTITY_0 = 10,  // Bullet of Player 1
 	RENDER_LAYER_ENTITY_1 = 20,  // Bullet of Player 2
 	RENDER_LAYER_ENTITY_2 = 30,  // Player & Player Wing
