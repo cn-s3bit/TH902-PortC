@@ -45,7 +45,7 @@ int main(int argc, char ** argv) {
 
 	initialize_vulkan(window, VK_MAKE_VERSION(0, 1, 0));
 	create_graphics_pipeline_f(RESOURCE_FOLDER "Shaders/default.vert.spv", RESOURCE_FOLDER "Shaders/default.frag.spv");
-	int texture_id = load_texture2d(RESOURCE_FOLDER "Game/Image/Ming/Ming.png");
+	long texture_id = load_texture2d(RESOURCE_FOLDER "Game/Image/Barrages.png");
 	for (unsigned m = 0; m < get_vk_swap_chain()->ImageCount; m++)
 		bind_texture2d(m, texture_id);
 	int t = 0;
@@ -57,20 +57,23 @@ int main(int argc, char ** argv) {
 		clock_t b = clock();
 		unsigned imageid = sdlex_begin_frame();
 		for (int i = 0; i < SDL_max(200 - t / 3, 1); i++) {
-			SDL_Rect p1 = { 0, 0, 200, 400 };
+			SDL_Rect p1 = { 0, 0, 24, 24 };
+			SDL_Rect p2 = { 0, 0, 24, 24 };
 			p1.x += t + i;
 			sdlex_render_texture(imageid, p1);
-			sdlex_render_texture_ex(imageid,
+			sdlex_render_texture_region_ex(imageid,
 				vector2_scl(vector2_one(), (float)t),
 				vector2_adds(vector2_zero(), 200, 400),
 				1.0f * (float)(t + i),
-				vector2_scl(vector2_one(), 0.4f));
+				vector2_scl(vector2_one(), 0.4f), p2);
 		}
 		sdlex_end_frame(imageid);
 		SDL_Log("%d", clock() - b);
+		SDL_Delay(SDL_max(16 - clock() + b, 0));
 	}
 
 LABEL_EXIT:
+	dispose_texture2d(texture_id);
 	vkDeviceWaitIdle(get_vk_device());
 	TTF_CloseFont(testFont);
 	cleanup_vulkan_pipeline();
