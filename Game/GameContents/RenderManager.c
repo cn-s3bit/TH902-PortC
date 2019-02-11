@@ -42,7 +42,7 @@ void sort_layer_for_batching(int layerId) {
 	SDL_qsort(layers[layerId]->_data, layers[layerId]->Size, layers[layerId]->ElementSize, qsort_compare_renderable);
 	destroy_deque(layer_empty_ids[layerId]);
 	layer_empty_ids[layerId] = create_deque(sizeof(int), 32u);
-	for (int i = 0; i < layers[layerId]->Size; i++) {
+	for (unsigned i = 0; i < layers[layerId]->Size; i++) {
 		Renderable * item;
 		get_element_from_array_list(layers[layerId], i, &item);
 		if (item == NULL) push_deque_tail(layer_empty_ids[layerId], &i);
