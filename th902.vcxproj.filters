@@ -359,9 +359,6 @@
     <Library Include="VCSDL\lib\win32\SDL2_ttf.lib">
       <Filter>Static Libraries</Filter>
     </Library>
-    <Library Include="..\VulkanSDK\1.1.82.1\Lib32\vulkan-1.lib">
-      <Filter>Static Libraries</Filter>
-    </Library>
   </ItemGroup>
   <ItemGroup>
     <None Include="VCSDL\lib\win32\SDL2.dll">
