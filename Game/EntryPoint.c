@@ -40,6 +40,9 @@ int main(int argc, char ** argv) {
 		SDL_Log("Working Path: %s\n", argv[0]);
 	init_sdl();
 	SDL_Window * window = SDL_CreateWindow("TH902", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 960, 720, SDL_WINDOW_VULKAN | SDL_WINDOW_ALLOW_HIGHDPI);
+	if (window == NULL) {
+		window = SDL_CreateWindow("TH902", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 960, 720, SDL_WINDOW_ALLOW_HIGHDPI);
+	}
 	SDL_Surface * icon = IMG_Load(RESOURCE_FOLDER "Game/Image/icon32.png");
 	SDL_SetWindowIcon(window, icon);
 	TTF_Font * testFont = TTF_OpenFont(DEFAULT_FONT_PATH, 32);
