@@ -29,3 +29,49 @@ void unregister_renderable(Renderable * renderable) {
 	assign_array_list_element(layers[renderable->Layer], renderable->_internalId, &null_handler);
 	push_deque_tail(layer_empty_ids[renderable->Layer], &renderable->_internalId);
 }
+
+static int qsort_compare_renderable(const void * a, const void * b) {
+	if ((*(Renderable **)a) == NULL)
+		return -1;
+	if ((*(Renderable **)b) == NULL)
+		return 1;
+	return (*(Renderable **)a)->TextureRegion.TextureID - (*(Renderable **)b)->TextureRegion.TextureID;
+}
+
+void sort_layer_for_batching(int layerId) {
+	SDL_qsort(layers[layerId]->_data, layers[layerId]->Size, layers[layerId]->ElementSize, qsort_compare_renderable);
+	destroy_deque(layer_empty_ids[layerId]);
+	layer_empty_ids[layerId] = create_deque(sizeof(int), 32u);
+	for (int i = 0; i < layers[layerId]->Size; i++) {
+		Renderable * item;
+		get_element_from_array_list(layers[layerId], i, &item);
+		if (item == NULL) push_deque_tail(layer_empty_ids[layerId], &i);
+		else item->_internalId = i;
+	}
+}
+
+long current_texture_id = -1;
+void render_layer(unsigned imageId, int layerId) {
+	sort_layer_for_batching(layerId);
+	for (int i = 0; i < layers[layerId]->Size; i++) {
+		Renderable * item;
+		get_element_from_array_list(layers[layerId], i, &item);
+		if (item == NULL) continue;
+		if (item->TextureRegion.TextureID != current_texture_id) {
+			current_texture_id = item->TextureRegion.TextureID;
+			bind_texture2d(imageId, current_texture_id);
+		}
+		Vector2 origin;
+		origin = vector2_create((float)item->TextureRegion.Rect.w, (float)item->TextureRegion.Rect.h);
+		origin = vector2_scl(origin, 0.5f);
+		sdlex_render_texture_region_ex(imageId, item->Center, origin, item->Rotation, item->Scale, item->Color, item->TextureRegion.Rect);
+	}
+}
+
+void render_all_layers(unsigned imageId) {
+	for (int i = 0; i < RENDER_LAYER_MAX; i++) {
+		if (layers[i] != NULL) {
+			render_layer(imageId, i);
+		}
+	}
+}

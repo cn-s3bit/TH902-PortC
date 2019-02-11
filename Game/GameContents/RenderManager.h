@@ -3,6 +3,7 @@
 #include "../SDLEx/SDLWithPlugins.h"
 #include "../SDLEx/MathEx/MathEx.h"
 #include "../SDLEx/Utils/Deque.h"
+#include "../SDLEx/Vulkan/SDLExVulkan.h"
 enum RenderLayer {
 	RENDER_LAYER_BACKGROUND = 1,  // Background
 	RENDER_LAYER_ENTITY_0 = 4,  // Bullet of Player 1
@@ -38,5 +39,8 @@ typedef struct Renderable {
 
 void register_renderable(Renderable * renderable);
 void unregister_renderable(Renderable * renderable);
+void sort_layer_for_batching(int layerId);
+void render_layer(unsigned imageId, int layerId);
+void render_all_layers(unsigned imageId);
 
 #endif
