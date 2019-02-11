@@ -342,6 +342,9 @@
     <ClInclude Include="Game\SDLEx\MathEx\Vector4.h">
       <Filter>Source Files\SDLEx\MathEx</Filter>
     </ClInclude>
+    <ClInclude Include="Game\GameContents\BasicProjectile.h">
+      <Filter>Source Files\GameContents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="VCSDL\lib\win32\SDL2main.lib">
@@ -451,6 +454,9 @@
     </ClCompile>
     <ClCompile Include="Game\SDLEx\Vulkan\SDLExTexture2D.c">
       <Filter>Source Files\SDLEx\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameContents\BasicProjectile.c">
+      <Filter>Source Files\GameContents</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
