@@ -5,17 +5,17 @@
 
 Deque * free_projectile_ids;
 Projectile projectiles[MAX_PROJ];
-ProjectileTypeDescriptor projectileTypes[MAX_PROJ_TYPE];
+ProjectileTypeDescriptor projectile_types[MAX_PROJ_TYPE];
 
 inline void add_type(short type, int x, int y, int w, int h, float originX, float originY, float pdr0, int colorId) {
-	projectileTypes[type].Region.x = x;
-	projectileTypes[type].Region.y = y;
-	projectileTypes[type].Region.w = w;
-	projectileTypes[type].Region.h = h;
-	projectileTypes[type].Origin.X = originX;
-	projectileTypes[type].Origin.Y = originY;
-	projectileTypes[type].JudgeRadius = pdr0;
-	projectileTypes[type].ColorID = colorId;
+	projectile_types[type].Region.x = x;
+	projectile_types[type].Region.y = y;
+	projectile_types[type].Region.w = w;
+	projectile_types[type].Region.h = h;
+	projectile_types[type].Origin.X = originX;
+	projectile_types[type].Origin.Y = originY;
+	projectile_types[type].JudgeRadius = pdr0;
+	projectile_types[type].ColorID = colorId;
 }
 
 inline void add_types() {
@@ -301,7 +301,7 @@ void update_projectiles() {
 	}
 }
 
-const int bulletTypes[25][8] = {
+const int bullet_types[25][8] = {
 	{ 1,2,3,4,5,6,7,8 }, // 0
 	{ 9,10,11,12,13,14,15,16 }, // 1
 	{ 17,18,19,20,21,22,23,24 }, // 2
