@@ -30,13 +30,11 @@ void cleanup_descriptor_pool() {
 void bind_texture(unsigned imageIndex, VkImageView textureImageView, VkSampler textureSampler, VkImageCreateInfo textureInfo) {
 	unsigned i = imageIndex; {
 		VulkanCurrentTextureInfo[imageIndex] = textureInfo;
-		VkDescriptorImageInfo imageInfo;
-		imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+		VkDescriptorImageInfo imageInfo = { .imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL };
 		imageInfo.imageView = textureImageView;
 		imageInfo.sampler = textureSampler;
 
-		VkWriteDescriptorSet descriptorWrites;
-		descriptorWrites.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+		VkWriteDescriptorSet descriptorWrites = { .sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET };
 		descriptorWrites.dstSet = get_vk_pipeline()->DescriptorSets[i];
 		descriptorWrites.dstBinding = 0;
 		descriptorWrites.dstArrayElement = 0;
