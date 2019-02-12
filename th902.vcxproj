@@ -22,6 +22,7 @@
     <ClInclude Include="Game\Constants.h" />
     <ClInclude Include="Game\GameContents\BasicProjectile.h" />
     <ClInclude Include="Game\GameContents\RenderManager.h" />
+    <ClInclude Include="Game\GameContents\ResourceManager.h" />
     <ClInclude Include="Game\SDLEx\MathEx\MathEx.h" />
     <ClInclude Include="Game\SDLEx\MathEx\MathExConsts.h" />
     <ClInclude Include="Game\SDLEx\MathEx\Vector2.h" />
@@ -208,6 +209,7 @@
     <ClCompile Include="Game\EntryPoint.c" />
     <ClCompile Include="Game\GameContents\BasicProjectile.c" />
     <ClCompile Include="Game\GameContents\RenderManager.c" />
+    <ClCompile Include="Game\GameContents\ResourceManager.c" />
     <ClCompile Include="Game\SDLEx\Utils\ArrayList.c" />
     <ClCompile Include="Game\SDLEx\Utils\Deque.c" />
     <ClCompile Include="Game\SDLEx\Utils\FileUtils.c" />

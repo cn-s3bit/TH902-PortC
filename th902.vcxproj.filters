@@ -345,6 +345,9 @@
     <ClInclude Include="Game\GameContents\BasicProjectile.h">
       <Filter>Source Files\GameContents</Filter>
     </ClInclude>
+    <ClInclude Include="Game\GameContents\ResourceManager.h">
+      <Filter>Source Files\GameContents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="VCSDL\lib\win32\SDL2main.lib">
@@ -453,6 +456,9 @@
       <Filter>Source Files\SDLEx\Vulkan</Filter>
     </ClCompile>
     <ClCompile Include="Game\GameContents\BasicProjectile.c">
+      <Filter>Source Files\GameContents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameContents\ResourceManager.c">
       <Filter>Source Files\GameContents</Filter>
     </ClCompile>
   </ItemGroup>
