@@ -1,4 +1,5 @@
 #include "BasicProjectile.h"
+#include "ResourceManager.h"
 
 #define MAX_PROJ 8192
 #define MAX_PROJ_TYPE 256
@@ -260,14 +261,21 @@ inline void initialize_globals() {
 	}
 }
 
+void sync_proj_renderable(Projectile * proj) {
+	if (proj->RenderablePt) {
+		proj->RenderablePt->Center = proj->Position;
+		proj->RenderablePt->Rotation = proj->Rotation;
+		proj->RenderablePt->Scale = proj->Scale;
+		proj->RenderablePt->Color = proj->Color;
+	}
+}
+
 void update_basic_projectile(Projectile * proj) {
 	if (proj->AI)
 		proj->AI(proj);
 	proj->Velocity = vector2_add(proj->Velocity, proj->Accel);
 	proj->Position = vector2_add(proj->Position, proj->Velocity);
-	if (proj->RenderablePt) {
-		proj->RenderablePt->Center = proj->Position;
-	}
+	sync_proj_renderable(proj);
 }
 
 Projectile * alloc_projectile() {
@@ -288,8 +296,17 @@ Projectile * alloc_projectile() {
 	return proj;
 }
 
+void raii_projectile_renderable(Projectile * proj) {
+	proj->RenderablePt = malloc(sizeof(Renderable *));
+	proj->RenderablePt->TextureRegion.Rect = projectile_types[proj->Type].Region;
+	proj->RenderablePt->TextureRegion.TextureID = resources.Images.Barrages;
+	sync_proj_renderable(proj);
+}
+
 void free_projectile(Projectile * proj) {
 	proj->Active = 0;
+	free(proj->RenderablePt);
+	proj->RenderablePt = NULL;
 	push_deque_tail(free_projectile_ids, &proj->WhoAmI);
 }
 

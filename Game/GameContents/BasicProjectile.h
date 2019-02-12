@@ -5,12 +5,15 @@
 
 typedef struct Projectile {
 	short Active;
-	short type;
+	short Type;
 	int WhoAmI;
 	Vector2 Position;  // Center
 	Vector2 Velocity;
 	Vector2 Accel;
+	float Rotation;
+	Vector2 Scale;
 	Renderable * RenderablePt;
+	Vector4 Color;
 	void * CustomData;
 	void (*AI)(void * proj);
 } Projectile;
@@ -25,7 +28,9 @@ typedef struct ProjectileTypeDescriptor {
 
 void update_basic_projectile(Projectile * proj);
 Projectile * alloc_projectile();
+void raii_projectile_renderable(Projectile * proj);
 void free_projectile(Projectile * proj);
+void sync_proj_renderable(Projectile * proj);
 void update_projectiles();
 
 #endif
