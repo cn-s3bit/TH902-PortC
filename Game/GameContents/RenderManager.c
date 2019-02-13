@@ -50,10 +50,10 @@ void sort_layer_for_batching(int layerId) {
 	}
 }
 
-long current_texture_id = -1;
 void render_layer(unsigned imageId, int layerId) {
 	sort_layer_for_batching(layerId);
-	for (int i = 0; i < layers[layerId]->Size; i++) {
+	long current_texture_id = -1;
+	for (unsigned i = 0; i < layers[layerId]->Size; i++) {
 		Renderable * item;
 		get_element_from_array_list(layers[layerId], i, &item);
 		if (item == NULL) continue;
