@@ -60,7 +60,7 @@ inline Vector2 vector2_subs(Vector2 a, float x, float y) {
 }
 
 inline float vector2_lenSqr(Vector2 a) {
-	return a.X * a.X + a.Y + a.Y;
+	return a.X * a.X + a.Y * a.Y;
 }
 
 inline float vector2_len(Vector2 a) {
