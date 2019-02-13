@@ -291,20 +291,26 @@ Projectile * alloc_projectile() {
 	proj->AI = NULL;
 	proj->RenderablePt = NULL;
 	proj->Accel = proj->Velocity = proj->Position = vector2_zero();
+	proj->Color = vector4_create(1.0f, 1.0f, 1.0f, 1.0f);
+	proj->Scale = vector2_one();
+	proj->Rotation = 0.0f;
 	proj->Active = 1;
 	proj->WhoAmI = id;
 	return proj;
 }
 
 void raii_projectile_renderable(Projectile * proj) {
-	proj->RenderablePt = malloc(sizeof(Renderable *));
+	proj->RenderablePt = malloc(sizeof(Renderable));
+	proj->RenderablePt->Layer = RENDER_LAYER_ENTITY_5;
 	proj->RenderablePt->TextureRegion.Rect = projectile_types[proj->Type].Region;
 	proj->RenderablePt->TextureRegion.TextureID = resources.Images.Barrages;
 	sync_proj_renderable(proj);
+	register_renderable(proj->RenderablePt);
 }
 
 void free_projectile(Projectile * proj) {
 	proj->Active = 0;
+	unregister_renderable(proj->RenderablePt);
 	free(proj->RenderablePt);
 	proj->RenderablePt = NULL;
 	push_deque_tail(free_projectile_ids, &proj->WhoAmI);
