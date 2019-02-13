@@ -56,7 +56,7 @@ int main(int argc, char ** argv) {
 
 	initialize_vulkan(window, VK_MAKE_VERSION(0, 1, 0));
 	create_graphics_pipeline_f(RESOURCE_FOLDER "Shaders/default.vert.spv", RESOURCE_FOLDER "Shaders/default.frag.spv");
-	long texture_id = load_texture2d(RESOURCE_FOLDER "Game/Image/Barrages.png");
+	long texture_id = load_texture2d(RESOURCE_FOLDER "Game/Image/Barrages.0.png");
 	// bind_all_images_texture2d(texture_id);
 	resources.Images.Barrages = texture_id;
 	int t = 0;
