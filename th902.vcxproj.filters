@@ -464,5 +464,8 @@
     <ClCompile Include="Game\GameContents\ResourceManager.c">
       <Filter>Source Files\GameContents</Filter>
     </ClCompile>
+    <ClCompile Include="Game\SDLEx\Utils\RandomXS128.c">
+      <Filter>Source Files\SDLEx\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
