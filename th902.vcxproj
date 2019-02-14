@@ -35,6 +35,7 @@
     <ClInclude Include="Game\SDLEx\Utils\HashMap.h" />
     <ClInclude Include="Game\SDLEx\Utils\MathUtils.h" />
     <ClInclude Include="Game\SDLEx\Utils\MemoryPool.h" />
+    <ClInclude Include="Game\SDLEx\Utils\RandomXS128.h" />
     <ClInclude Include="Game\SDLEx\Vulkan\SDLExVulkan.h" />
     <ClInclude Include="VCSDL\include\begin_code.h" />
     <ClInclude Include="VCSDL\include\close_code.h" />

@@ -348,6 +348,9 @@
     <ClInclude Include="Game\GameContents\ResourceManager.h">
       <Filter>Source Files\GameContents</Filter>
     </ClInclude>
+    <ClInclude Include="Game\SDLEx\Utils\RandomXS128.h">
+      <Filter>Source Files\SDLEx\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="VCSDL\lib\win32\SDL2main.lib">
