@@ -19,6 +19,7 @@ enum RenderLayer {
 	RENDER_LAYER_UI_0 = 51,  /* UI 1 */
 	RENDER_LAYER_UI_1 = 52,  /* UI 2 */
 	RENDER_LAYER_UI_2 = 53,  /* UI 3 */
+	RENDER_LAYER_OVERLAY = 63,  /* Screen Overlay */
 	RENDER_LAYER_MAX = 64,  /* Array Length */
 };
 typedef struct TextureRegion {
