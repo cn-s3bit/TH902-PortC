@@ -32,27 +32,27 @@ typedef struct CuckooHashMap {
 	int AutoFreeWhenRemove;
 } CuckooHashMap;
 
-/// Create an empty Hashmap.
+/* Create an empty Hashmap. */
 CuckooHashMap * create_cuckoo_hashmap();
 
-/// Create an empty Hashmap that pointers inside are automatically freed when destroy/removed.
+/* Create an empty Hashmap that pointers inside are automatically freed when destroy/removed. */
 CuckooHashMap * create_autofree_cuckoo_hashmap();
 
-/// Create an empty Hashmap with the given parameters.
+/* Create an empty Hashmap with the given parameters. */
 CuckooHashMap * create_cuckoo_hashmap_p(int initialCapacity, float loadFactor, int autoFree, int(*hash_func) (void * key), int(*equal_func) (void * key1, void * key2), void(*free_key_func) (void * key));
 
-/// Destroy a Hashmap and release all resources related.
+/* Destroy a Hashmap and release all resources related. */
 void destroy_cuckoo_hashmap(CuckooHashMap * map_obj);
 
-/// Get the value of the entry specified by @param key in the Hashmap.
+/* Get the value of the entry specified by @param key in the Hashmap. */
 void * get_cuckoo_hashmap(CuckooHashMap * map_obj, void * key);
 
-/// Insert or update the value of the entry specified by @param key with @param value.
-/// @returns The old value of the key in the map, or NULL.
+/** Insert or update the value of the entry specified by @param key with @param value. 
+  * @returns The old value of the key in the map, or NULL. */
 void * put_cuckoo_hashmap(CuckooHashMap * map_obj, void * key, void * value);
 
-/// Remove the entry specified by @param key.
-/// @returns The value of the key in the map, or NULL if key does not exist.
+/** Remove the entry specified by @param key.
+  * @returns The value of the key in the map, or NULL if key does not exist. */
 void * remove_from_cuckoo_hashmap(CuckooHashMap * map_obj, void * key);
 
 typedef CuckooHashMap IntIntCuckooHashMap;

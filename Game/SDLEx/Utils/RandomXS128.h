@@ -12,16 +12,16 @@ RandomXS128 * randomxs_create_no_seed();
 RandomXS128 * randomxs_create_a_seed(long long seed);
 RandomXS128 * randomxs_create(long long seed0, long long seed1);
 long long randomxs_next_long();
-long long randomxs_next_long_limited(long long n); //@param n the positive bound on the random number to be returned. n -> final
-long randomxs_next(long bits); //protected final
+long long randomxs_next_long_limited(long long n); /*@param n the positive bound on the random number to be returned. n -> final */
+long randomxs_next(long bits); /*protected final */
 long randomxs_next_int();
-long randomxs_next_int_limited(long n); //n -> final nµÄÓïÒåÎÒ¿ÉÄÜÓĞÎó½â
+long randomxs_next_int_limited(long n); /*n -> final nçš„è¯­ä¹‰æˆ‘å¯èƒ½æœ‰è¯¯è§£ */
 double randomxs_next_double();
 double randomxs_next_float();
 SDL_bool randomxs_next_boolean();
 void randomxs_next_bytes(jbyte * bytes);
-void randomxs_set_seed(long long seed); //seed -> final
+void randomxs_set_seed(long long seed); /*seed -> final */
 void randomxs_set_state(long seed);
-//long long murmurGash3(long long x); //private static
-#endif // !SDLEX_RANDOMXS128_H
-/*ÊµÏÖ³ÉSDLEx/Utils/RandomXS128.hºÍSDLEx/Utils/RandomXS128.c ËùÓĞ³ÉÔ±º¯ÊıµÚÒ»¸ö²ÎÊı·ÅRandomXS128 * thiz£¬º¯ÊıÃû¼ÓÇ°×ºrandomxs_ ÊµÏÖ½á¹¹¿ÉÒÔ²Î¿¼ArrayList*/
+/*long long murmurGash3(long long x);  private static */
+#endif /* !SDLEX_RANDOMXS128_H */
+/*å®ç°æˆSDLEx/Utils/RandomXS128.hå’ŒSDLEx/Utils/RandomXS128.c æ‰€æœ‰æˆå‘˜å‡½æ•°ç¬¬ä¸€ä¸ªå‚æ•°æ”¾RandomXS128 * thizï¼Œå‡½æ•°ååŠ å‰ç¼€randomxs_ å®ç°ç»“æ„å¯ä»¥å‚è€ƒArrayList*/

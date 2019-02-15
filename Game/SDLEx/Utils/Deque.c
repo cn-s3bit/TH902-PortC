@@ -26,7 +26,7 @@ int push_deque_tail(Deque * deque, const void * inItem) {
 		deque->_tail -= deque->_arrayList.Size;
 	}
 	if (deque->_tail == deque->_head) {
-		// expand
+		/* expand */
 		unsigned expand = deque->_arrayList.Size;
 		void * tmp_trash = malloc(deque->_arrayList.ElementSize);
 		for (unsigned i = 0; i < expand; i++) {
@@ -65,7 +65,7 @@ int push_deque_head(Deque * deque, const void * inItem) {
 		deque->_head += deque->_arrayList.Size;
 	}
 	if (deque->_tail == deque->_head) {
-		// expand
+		/* expand */
 		unsigned expand = deque->_arrayList.Size;
 		void * tmp_trash = malloc(deque->_arrayList.ElementSize);
 		for (unsigned i = 0; i < expand; i++) {

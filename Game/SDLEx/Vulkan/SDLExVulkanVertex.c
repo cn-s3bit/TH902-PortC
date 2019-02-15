@@ -80,7 +80,7 @@ void create_vertex_buffer(unsigned nVertices) {
 }
 
 void * request_vertex_buffer_memory(void) {
-	// TODO: Implement Staging Buffer
+	/* TODO: Implement Staging Buffer */
 	vkMapMemory(get_vk_device(), VulkanVertexBufferMemory, 0, sizeof(Vertex) * 3, 0, &SDLExVertexBufferMemory);
 	return SDLExVertexBufferMemory;
 }

@@ -105,8 +105,8 @@ static void _sdlex_vulkan_pick_physical_device(SDL_Window * window) {
 	for (unsigned i = 0; i < deviceCount; i++) {
 		VkPhysicalDeviceProperties deviceProperties;
 		vkGetPhysicalDeviceProperties(devices[i], &deviceProperties);
-		// VkPhysicalDeviceFeatures deviceFeatures;
-		// vkGetPhysicalDeviceFeatures(devices[i], &deviceFeatures);
+		/* VkPhysicalDeviceFeatures deviceFeatures; 
+		/* vkGetPhysicalDeviceFeatures(devices[i], &deviceFeatures); */
 		if (deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
 			&& _sdlex_vulkan_check_device_extension_support(devices[i])
 			&& find_queue_families(devices[i], VK_QUEUE_GRAPHICS_BIT) >= 0) {

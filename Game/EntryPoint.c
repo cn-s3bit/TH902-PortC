@@ -57,7 +57,7 @@ int main(int argc, char ** argv) {
 	initialize_vulkan(window, VK_MAKE_VERSION(0, 1, 0));
 	create_graphics_pipeline_f(RESOURCE_FOLDER "Shaders/default.vert.spv", RESOURCE_FOLDER "Shaders/default.frag.spv");
 	long texture_id = load_texture2d(RESOURCE_FOLDER "Game/Image/Barrages.0.png");
-	// bind_all_images_texture2d(texture_id);
+	/* bind_all_images_texture2d(texture_id); */
 	resources.Images.Barrages = texture_id;
 	int t = 0;
 	Projectile * projs[8];
@@ -68,7 +68,7 @@ int main(int argc, char ** argv) {
 		projs[i]->AI = test_ai0;
 		raii_projectile_renderable(projs[i]);
 	}
-	// Main Loop
+	/* Main Loop */
 	while (1) {
 		t++;
 		if (handle_event() == EXIT_SIGNAL)
@@ -85,13 +85,12 @@ int main(int argc, char ** argv) {
 
 LABEL_EXIT:
 	dispose_texture2d(texture_id);
-	// TTF_CloseFont(testFont);
+	/* TTF_CloseFont(testFont); */
 	if (!sdlex_is_software_fallback_enabled()) {
 		vkDeviceWaitIdle(get_vk_device());
 		cleanup_vulkan_pipeline();
 		cleanup_vulkan();
 	}
-	// SDL_DestroyWindow(window);
 	cleanup_sdl();
 	printf("Press Enter to Exit...");
 	getchar();

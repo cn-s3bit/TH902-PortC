@@ -6,7 +6,7 @@
 #endif
 #include "HashMap.h"
 
-// Reference: https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/utils/ObjectMap.java
+/* Reference: https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/utils/ObjectMap.java */
 
 inline int _sdlex_hashmap_nextpo2(int inp) {
 	int base = 1;
@@ -20,7 +20,7 @@ inline int _sdlex_hashmap_ror(int val, int size) {
 	int res = val >> size;
 	res |= val << (32 - size);
 	return res;
-	// https://blog.csdn.net/dfq12345/article/details/78177767?utm_source=copy
+	/* https://blog.csdn.net/dfq12345/article/details/78177767?utm_source=copy */
 }
 
 inline int _sdlex_hashmap_trailing_0(int i) {
@@ -32,7 +32,7 @@ inline int _sdlex_hashmap_trailing_0(int i) {
 	y = i << 4; if (y != 0) { n = n - 4; i = y; }
 	y = i << 2; if (y != 0) { n = n - 2; i = y; }
 	return n - _sdlex_hashmap_ror((i << 1), 31);
-	// https://blog.csdn.net/tina_tian1/article/details/78364795?utm_source=copy
+	/* https://blog.csdn.net/tina_tian1/article/details/78364795?utm_source=copy */
 }
 
 inline int hash2(CuckooHashMap * map_obj, int h) {
@@ -92,7 +92,7 @@ void _sdlex_hashmap_resize(CuckooHashMap * map_obj, int newSize);
 void _sdlex_hashmap_push(CuckooHashMap * map_obj, void * insertKey, void * insertValue, int index1, void * key1, int index2, void * key2, int index3, void * key3);
 
 void _sdlex_hashmap_putresize(CuckooHashMap * map_obj, void * key, void * value) {
-	// Check for empty buckets.
+	/* Check for empty buckets. */
 	int hashCode = map_obj->HashFunc ? map_obj->HashFunc(key) : (int)key;
 	int index1 = hashCode & map_obj->_mask;
 	void * key1 = map_obj->_keyTable[index1];
@@ -158,12 +158,12 @@ void _sdlex_hashmap_resize(CuckooHashMap * map_obj, int newSize) {
 
 inline void _sdlex_hashmap_putstash(CuckooHashMap * map_obj, void * key, void * value) {
 	if (map_obj->_stashSize == map_obj->_stashCapacity) {
-		// Too many pushes occurred and the stash is full, increase the table size.
+		/* Too many pushes occurred and the stash is full, increase the table size. */
 		_sdlex_hashmap_resize(map_obj, map_obj->_capacity << 1);
 		_sdlex_hashmap_putresize(map_obj, key, value);
 		return;
 	}
-	// Store key in the stash.
+	/* Store key in the stash. */
 	int index = map_obj->_capacity + map_obj->_stashSize;
 	map_obj->_keyTable[index] = key;
 	map_obj->_valueTable[index] = value;
@@ -176,13 +176,13 @@ void _sdlex_hashmap_push(CuckooHashMap * map_obj, void * insertKey, void * inser
 	void ** valueTable = map_obj->_valueTable;
 	int mask = map_obj->_mask;
 
-	// Push keys until an empty bucket is found.
+	/* Push keys until an empty bucket is found. */
 	void * evictedKey;
 	void * evictedValue;
 	int i = 0, pushIterations = map_obj->_pushIterations;
 	int state = 0;
 	do {
-		// Replace the key and value for one of the hashes.
+		/* Replace the key and value for one of the hashes. */
 		switch (state++) {
 		case 0:
 			evictedKey = key1;
@@ -205,7 +205,7 @@ void _sdlex_hashmap_push(CuckooHashMap * map_obj, void * insertKey, void * inser
 		}
 		state = state > 2 ? 0 : state;
 
-		// If the evicted key hashes to an empty bucket, put it there and stop.
+		/* If the evicted key hashes to an empty bucket, put it there and stop. */
 		int hashCode = map_obj->HashFunc ? map_obj->HashFunc(evictedKey) : (int) evictedKey;
 		index1 = hashCode & mask;
 		key1 = keyTable[index1];
@@ -247,7 +247,7 @@ void _sdlex_hashmap_push(CuckooHashMap * map_obj, void * insertKey, void * inser
 #define FREEKEY_FUNC(map_obj, k) (map_obj->FreeKeyFunc ? map_obj->FreeKeyFunc(k) : free(k))
 
 void _sdlex_hashmap_removestash_by_index(CuckooHashMap * map_obj, int index) {
-	// If the removed location was not last, move the last tuple to the removed location.
+	/* If the removed location was not last, move the last tuple to the removed location. */
 	map_obj->_stashSize--;
 	int lastIndex = map_obj->_capacity + map_obj->_stashSize;
 	if (map_obj->AutoFreeWhenRemove) {
@@ -300,7 +300,7 @@ void * get_cuckoo_hashmap(CuckooHashMap * map_obj, void * key) {
 void * put_cuckoo_hashmap(CuckooHashMap * map_obj, void * key, void * value) {
 	void ** keyTable = map_obj->_keyTable;
 
-	// Check for existing keys.
+	/* Check for existing keys. */
 	int hashCode = map_obj->HashFunc ? map_obj->HashFunc(key) : (int)key;
 	int index1 = hashCode & map_obj->_mask;
 	void * key1 = keyTable[index1];
@@ -332,7 +332,7 @@ void * put_cuckoo_hashmap(CuckooHashMap * map_obj, void * key, void * value) {
 		return oldValue;
 	}
 
-	// Update key in the stash.
+	/* Update key in the stash. */
 	for (int i = map_obj->_capacity, n = i + map_obj->_stashSize; i < n; i++) {
 		if (EQUALS_FUNC(map_obj, key, map_obj->_keyTable[i])) {
 			void * oldValue = map_obj->_valueTable[i];
@@ -343,7 +343,7 @@ void * put_cuckoo_hashmap(CuckooHashMap * map_obj, void * key, void * value) {
 		}
 	}
 
-	// Check for empty buckets.
+	/* Check for empty buckets. */
 	if (key1 == NULL) {
 		map_obj->_keyTable[index1] = key;
 		map_obj->_valueTable[index1] = value;

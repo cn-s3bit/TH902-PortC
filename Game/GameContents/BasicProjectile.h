@@ -7,7 +7,7 @@ typedef struct Projectile {
 	short Active;
 	short Type;
 	int WhoAmI;
-	Vector2 Position;  // Center
+	Vector2 Position;  /* Center */
 	Vector2 Velocity;
 	Vector2 Accel;
 	float Rotation;

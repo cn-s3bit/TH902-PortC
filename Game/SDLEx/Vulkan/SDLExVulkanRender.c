@@ -62,7 +62,7 @@ unsigned sdlex_begin_frame() {
 }
 
 void sdlex_render_texture(unsigned imageIndex, SDL_Rect target) {
-	// TODO: Image Specificated Batching
+	/* TODO: Image Specificated Batching */
 	if (software_fallback_state.IsEnabled) {
 		sdlex_software_render_texture(target);
 		return;

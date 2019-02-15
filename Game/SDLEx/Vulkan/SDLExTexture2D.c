@@ -209,7 +209,7 @@ void copy_buffer_to_image(VkBuffer buffer, VkImage image, unsigned width, unsign
 
 long load_texture2d(const char * filename) {
 	if (!texture_images) {
-		// Initialize
+		/* Initialize */
 		texture_images = create_teximagemap();
 		texture_memories = create_texmemorymap();
 		texture_views = create_texviewmap();
@@ -256,7 +256,7 @@ long load_texture2d(const char * filename) {
 	put_texviewmap(texture_views, next_image_id, textureImageView);
 	put_texsamplermap(texture_samplers, next_image_id, textureSampler);
 	put_texinfomap(texture_infos, next_image_id, imageInfo);
-	// TODO: Disposal
+	/* TODO: Disposal */
 
 	SDL_FreeSurface(raw);
 	vkDestroyBuffer(get_vk_device(), stagingBuffer, NULL);
