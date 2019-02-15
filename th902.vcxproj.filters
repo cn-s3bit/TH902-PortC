@@ -351,6 +351,9 @@
     <ClInclude Include="Game\SDLEx\Utils\RandomXS128.h">
       <Filter>Source Files\SDLEx\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="VCSDL\include\SDL_mixer.h">
+      <Filter>Header Files\VCSDL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="VCSDL\lib\win32\SDL2main.lib">
@@ -363,6 +366,9 @@
       <Filter>Static Libraries</Filter>
     </Library>
     <Library Include="VCSDL\lib\win32\SDL2_ttf.lib">
+      <Filter>Static Libraries</Filter>
+    </Library>
+    <Library Include="VCSDL\lib\win32\SDL2_mixer.lib">
       <Filter>Static Libraries</Filter>
     </Library>
   </ItemGroup>

@@ -75,6 +75,7 @@
     <ClInclude Include="VCSDL\include\SDL_log.h" />
     <ClInclude Include="VCSDL\include\SDL_main.h" />
     <ClInclude Include="VCSDL\include\SDL_messagebox.h" />
+    <ClInclude Include="VCSDL\include\SDL_mixer.h" />
     <ClInclude Include="VCSDL\include\SDL_mouse.h" />
     <ClInclude Include="VCSDL\include\SDL_mutex.h" />
     <ClInclude Include="VCSDL\include\SDL_name.h" />
@@ -127,6 +128,7 @@
     <Library Include="VCSDL\lib\win32\SDL2.lib" />
     <Library Include="VCSDL\lib\win32\SDL2main.lib" />
     <Library Include="VCSDL\lib\win32\SDL2_image.lib" />
+    <Library Include="VCSDL\lib\win32\SDL2_mixer.lib" />
     <Library Include="VCSDL\lib\win32\SDL2_ttf.lib" />
   </ItemGroup>
   <ItemGroup>
