@@ -59,15 +59,15 @@ long randomxs_next_int_limited(RandomXS128 * thiz, long n) {
 }
 
 double randomxs_next_double(RandomXS128 * thiz) {
-	return ((unsigned long long)nextLong() >> 11) * NORM_DOUBLE;
+	return ((unsigned long long)randomxs_next_long(thiz) >> 11) * NORM_DOUBLE;
 }
 
 double randomxs_next_float(RandomXS128 * thiz) {
-	return (float)((unsigned long long)(nextLong() >> 40) * NORM_FLOAT);
+	return (float)((unsigned long long)(randomxs_next_long(thiz) >> 40) * NORM_FLOAT);
 }
 
 SDL_bool randomxs_next_boolean(RandomXS128 * thiz) {
-	return (nextLong() & 1) != 0;
+	return (randomxs_next_long(thiz) & 1) != 0;
 }
 
 void randomxs_next_bytes(RandomXS128 * thiz, jbyte * bytes, size_t size) {
@@ -94,7 +94,7 @@ long long randomxs_get_state(RandomXS128 * thiz, long seed) {
 	return seed == 0 ? thiz->seed0 : thiz->seed1;
 }
 
-long long murmurGash3(long long x) {
+long long murmurHash3(long long x) {
 	x ^= (unsigned long long)x >> 33;
 	x *= 0xff51afd7ed558ccdL;
 	x ^= x >> 33;
