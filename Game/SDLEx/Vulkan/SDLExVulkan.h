@@ -88,6 +88,7 @@ void dispose_texture2d(long texture_id);
 void bind_texture2d(unsigned imageIndex, long texture_id);
 void bind_all_images_texture2d(long texture_id);
 VkImageCreateInfo get_texture2d_info(long textureId);
+SDL_Rect texture_frame_by_id(long textureId);
 
 void create_descriptor_pool();
 void create_descriptor_sets();
