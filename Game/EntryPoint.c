@@ -4,6 +4,7 @@
 #include "SDLEx/SDLWithPlugins.h"
 #include "SDLEx/Utils/MathUtils.h"
 #include "SDLEx/Utils/FileUtils.h"
+#include "SDLEx/Utils/RandomPool.h"
 #include "SDLEx/MathEx/MathEx.h"
 #include "Constants.h"
 #include "SDLEx/Vulkan/SDLExVulkan.h"
@@ -38,8 +39,10 @@ short handle_event(void) {
 }
 
 void test_ai0(Projectile * proj) {
-	SDL_Log("%d %f", proj->WhoAmI, proj->Accel.Y);
-	proj->Accel = vector2_scl((vector2_unit(vector2_create(rand() - RAND_MAX / 2, rand() - RAND_MAX / 2))), 0.03f);
+	// SDL_Log("%d %f", proj->WhoAmI, proj->Accel.Y);
+	float x = random_float_se(random_pool_get(1), -0.5f, 0.5f);
+	float y = random_float_se(random_pool_get(1), -0.5f, 0.5f);
+	proj->Accel = vector2_scl(vector2_unit(vector2_create(x, y)), 0.03f);
 }
 
 int main(int argc, char ** argv) {
@@ -60,10 +63,10 @@ int main(int argc, char ** argv) {
 	/* bind_all_images_texture2d(texture_id); */
 	resources.Images.Barrages = texture_id;
 	int t = 0;
-	Projectile * projs[8];
-	for (int i = 0; i < 8; i++) {
+	Projectile * projs[1024];
+	for (int i = 0; i < 1024; i++) {
 		projs[i] = alloc_projectile();
-		projs[i]->Type = rand() % 7 + 8;
+		projs[i]->Type = rand() % 7 + 9;
 		projs[i]->Position = vector2_create(480.0f, 360.0f);
 		projs[i]->AI = test_ai0;
 		raii_projectile_renderable(projs[i]);
