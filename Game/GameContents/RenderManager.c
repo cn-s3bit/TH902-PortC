@@ -35,7 +35,9 @@ static int qsort_compare_renderable(const void * a, const void * b) {
 		return -1;
 	if ((*(Renderable **)b) == NULL)
 		return 1;
-	return (*(Renderable **)a)->TextureRegion.TextureID - (*(Renderable **)b)->TextureRegion.TextureID;
+	if ((*(Renderable **)a)->TextureRegion.TextureID != (*(Renderable **)b)->TextureRegion.TextureID)
+		return (*(Renderable **)a)->TextureRegion.TextureID - (*(Renderable **)b)->TextureRegion.TextureID;
+	return (*(Renderable **)a)->_internalId - (*(Renderable **)b)->_internalId;
 }
 
 void sort_layer_for_batching(int layerId) {
@@ -53,6 +55,7 @@ void sort_layer_for_batching(int layerId) {
 void render_layer(unsigned imageId, int layerId) {
 	sort_layer_for_batching(layerId);
 	long current_texture_id = -1;
+	long count = 0;
 	for (unsigned i = 0; i < layers[layerId]->Size; i++) {
 		Renderable * item;
 		get_element_from_array_list(layers[layerId], i, &item);
@@ -60,6 +63,12 @@ void render_layer(unsigned imageId, int layerId) {
 		if (item->TextureRegion.TextureID != current_texture_id) {
 			current_texture_id = item->TextureRegion.TextureID;
 			bind_texture2d(imageId, current_texture_id);
+			count = 0;
+		}
+		++count;
+		if (count >= 128) {
+			sdlex_render_flush(imageId);
+			count = 0;
 		}
 		Vector2 origin;
 		origin = vector2_create((float)item->TextureRegion.Rect.w, (float)item->TextureRegion.Rect.h);
