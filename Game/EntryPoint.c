@@ -10,6 +10,7 @@
 #include "SDLEx/Vulkan/SDLExVulkan.h"
 #include "GameContents/BasicProjectile.h"
 #include "GameContents/ResourceManager.h"
+#include "UI/Screens.h"
 
 #include "SDLEx/Utils/HashMap.h"
 
@@ -28,21 +29,39 @@ void cleanup_sdl(void) {
 	SDL_Quit();
 }
 
+int activeScene = 0;
+
 short handle_event(void) {
 	SDL_Event e;
 	if (SDL_PollEvent(&e)) {
 		if (e.type == SDL_QUIT) {
 			return EXIT_SIGNAL;
 		}
+		switch (activeScene)
+		{
+		case 0:
+			return main_menu_screen.handle_event(e);
+		case 1:
+			return fight_screen.handle_event(e);
+		default:
+			break;
+		}
 	}
 	return NO_SIGNAL;
 }
 
-void test_ai0(Projectile * proj) {
-	// SDL_Log("%d %f", proj->WhoAmI, proj->Accel.Y);
-	float x = random_float_se(random_pool_get(1), -0.5f, 0.5f);
-	float y = random_float_se(random_pool_get(1), -0.5f, 0.5f);
-	proj->Accel = vector2_scl(vector2_unit(vector2_create(x, y)), 0.03f);
+static void new_active_scene(int id) {
+	switch (id)
+	{
+	case 0:
+		main_menu_screen.initialize();
+		break;
+	case 1:
+		fight_screen.initialize();
+		break;
+	default:
+		break;
+	}
 }
 
 int main(int argc, char ** argv) {
@@ -61,28 +80,32 @@ int main(int argc, char ** argv) {
 	create_graphics_pipeline_f(RESOURCE_FOLDER "Shaders/default.vert.spv", RESOURCE_FOLDER "Shaders/default.frag.spv");
 	load_resources();
 	Mix_VolumeMusic(127);
-	Mix_PlayMusic(resources.BGM.StartingScene, 0);
-	SDL_Log("C: %d", Mix_PlayChannel(-1, resources.SE.Biu, 0));
 	int t = 0;
-	Projectile * projs[1024];
-	for (int i = 0; i < 1024; i++) {
-		projs[i] = alloc_projectile();
-		projs[i]->Type = rand() % 7 + 9;
-		projs[i]->Position = vector2_create(480.0f, 360.0f);
-		projs[i]->AI = test_ai0;
-		raii_projectile_renderable(projs[i]);
-	}
+	main_menu_screen.initialize();
 	/* Main Loop */
+	int r0;
 	while (1) {
 		t++;
 		if (handle_event() == EXIT_SIGNAL)
 			goto LABEL_EXIT;
 		clock_t b = clock();
-		sdlex_set_blend_mode(SDLEX_BLEND_MODE_ADDITIVE);
-		update_projectiles();
-		unsigned imageid = sdlex_begin_frame();
-		render_all_layers(imageid);
-		sdlex_end_frame(imageid);
+		switch (activeScene)
+		{
+		case 0:
+			r0 = main_menu_screen.update();
+			main_menu_screen.render();
+			if (r0 != 0) {
+				activeScene = r0;
+				main_menu_screen.destroy();
+				new_active_scene(activeScene);
+			}
+			break;
+		case 1:
+			fight_screen.update();
+			fight_screen.render();
+		default:
+			break;
+		}
 		SDL_Log("%d", clock() - b);
 		SDL_Delay(SDL_max(16 - clock() + b, 0));
 	}

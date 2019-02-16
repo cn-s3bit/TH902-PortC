@@ -38,6 +38,7 @@
     <ClInclude Include="Game\SDLEx\Utils\RandomPool.h" />
     <ClInclude Include="Game\SDLEx\Utils\RandomXS128.h" />
     <ClInclude Include="Game\SDLEx\Vulkan\SDLExVulkan.h" />
+    <ClInclude Include="Game\UI\Screens.h" />
     <ClInclude Include="VCSDL\include\begin_code.h" />
     <ClInclude Include="VCSDL\include\close_code.h" />
     <ClInclude Include="VCSDL\include\SDL.h" />
@@ -230,6 +231,8 @@
     <ClCompile Include="Game\SDLEx\Vulkan\SDLExTexture2D.c" />
     <ClCompile Include="Game\SDLEx\Vulkan\SDLExVulkanUniform.c" />
     <ClCompile Include="Game\SDLEx\Vulkan\SDLExVulkanVertex.c" />
+    <ClCompile Include="Game\UI\FightScreen.c" />
+    <ClCompile Include="Game\UI\MainMenuScreen.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
