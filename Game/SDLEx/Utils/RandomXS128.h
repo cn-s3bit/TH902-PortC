@@ -1,6 +1,6 @@
-#include "../SDLWithPlugins.h"
 #ifndef SDLEX_RANDOMXS128_H
 #define SDLEX_RANDOMXS128_H
+#include "../SDLWithPlugins.h"
 #define NORM_DOUBLE (1.0/(1LL << 53))
 #define NORM_FLOAT (1.0/(1LL << 24))
 typedef unsigned char jbyte;
