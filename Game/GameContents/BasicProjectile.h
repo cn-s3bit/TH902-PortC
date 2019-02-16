@@ -29,6 +29,7 @@ typedef struct ProjectileTypeDescriptor {
 void update_basic_projectile(Projectile * proj);
 Projectile * alloc_projectile();
 void raii_projectile_renderable(Projectile * proj);
+void raii_projectile_renderable_layered(Projectile * proj, enum RenderLayer layerId);
 void free_projectile(Projectile * proj);
 void sync_proj_renderable(Projectile * proj);
 void update_projectiles();

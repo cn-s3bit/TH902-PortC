@@ -308,6 +308,15 @@ void raii_projectile_renderable(Projectile * proj) {
 	register_renderable(proj->RenderablePt);
 }
 
+void raii_projectile_renderable_layered(Projectile * proj, enum RenderLayer layerId) {
+	proj->RenderablePt = malloc(sizeof(Renderable));
+	proj->RenderablePt->Layer = layerId;
+	proj->RenderablePt->TextureRegion.Rect = projectile_types[proj->Type].Region;
+	proj->RenderablePt->TextureRegion.TextureID = resources.Images.Barrages;
+	sync_proj_renderable(proj);
+	register_renderable(proj->RenderablePt);
+}
+
 void free_projectile(Projectile * proj) {
 	proj->Active = 0;
 	unregister_renderable(proj->RenderablePt);
