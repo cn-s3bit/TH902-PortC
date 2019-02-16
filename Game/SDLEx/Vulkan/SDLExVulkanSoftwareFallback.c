@@ -72,10 +72,10 @@ int sdlex_software_render_texture_region_ex(Vector2 position, Vector2 origin, fl
 	rightUpper.Y *= scale.Y;
 	leftBottom = vector2_add(leftBottom, position);
 	rightUpper = vector2_add(rightUpper, position);
-	dst.x = leftBottom.X;
-	dst.y = leftBottom.Y;
-	dst.w = rightUpper.X - leftBottom.X;
-	dst.h = rightUpper.Y - leftBottom.Y;
+	dst.x = (int)leftBottom.X;
+	dst.y = (int)leftBottom.Y;
+	dst.w = (int)(rightUpper.X - leftBottom.X);
+	dst.h = (int)(rightUpper.Y - leftBottom.Y);
 	SDL_RenderSetClipRect(Renderer, &software_fallback_state.TargetSurface->clip_rect);
 	SDL_SetTextureColorMod(software_fallback_state.ActiveTexture, (Uint8)(color.X * 255), (Uint8)(color.Y * 255), (Uint8)(color.Z * 255));
 	SDL_SetTextureAlphaMod(software_fallback_state.ActiveTexture, (Uint8)(color.W * 255));
