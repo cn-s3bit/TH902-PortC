@@ -1,17 +1,24 @@
 #ifndef RESOURCE_MANAGER_H
 #define RESOURCE_MANAGER_H
+#include "SDL_mixer.h"
 
 struct Resources {
 	struct {
 		long Barrages;
 	} Images;
 	struct {
-		long Biu;
+		Mix_Chunk * Biu;
+		Mix_Chunk * Cat;
+		Mix_Chunk * OK;
+		Mix_Chunk * Select;
 	} SE;
 	struct {
-		long StartingScene;
+		Mix_Music * StartingScene;
 	} BGM;
 };
 
 extern struct Resources resources;
+
+void load_resources();
+void release_resources();
 #endif

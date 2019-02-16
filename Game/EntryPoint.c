@@ -59,9 +59,10 @@ int main(int argc, char ** argv) {
 
 	initialize_vulkan(window, VK_MAKE_VERSION(0, 1, 0));
 	create_graphics_pipeline_f(RESOURCE_FOLDER "Shaders/default.vert.spv", RESOURCE_FOLDER "Shaders/default.frag.spv");
-	long texture_id = load_texture2d(RESOURCE_FOLDER "Game/Image/Barrages.0.png");
-	/* bind_all_images_texture2d(texture_id); */
-	resources.Images.Barrages = texture_id;
+	load_resources();
+	Mix_VolumeMusic(127);
+	Mix_PlayMusic(resources.BGM.StartingScene, 0);
+	SDL_Log("C: %d", Mix_PlayChannel(-1, resources.SE.Biu, 0));
 	int t = 0;
 	Projectile * projs[1024];
 	for (int i = 0; i < 1024; i++) {
@@ -87,7 +88,7 @@ int main(int argc, char ** argv) {
 	}
 
 LABEL_EXIT:
-	dispose_texture2d(texture_id);
+	release_resources();
 	/* TTF_CloseFont(testFont); */
 	if (!sdlex_is_software_fallback_enabled()) {
 		vkDeviceWaitIdle(get_vk_device());
