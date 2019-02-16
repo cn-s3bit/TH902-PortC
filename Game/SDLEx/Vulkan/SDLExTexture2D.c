@@ -229,6 +229,9 @@ long load_texture2d(const char * filename) {
 		put_softwaretexmap(software_textures, next_image_id, texture);
 		return next_image_id;
 	}
+	SDL_Surface * old = raw;
+	raw = SDL_ConvertSurfaceFormat(raw, SDL_PIXELFORMAT_RGBA32, 0);
+	SDL_FreeSurface(old);
 
 	VkDeviceSize imageSize = raw->w * raw->h * raw->format->BytesPerPixel;
 
@@ -285,6 +288,17 @@ void bind_texture2d(unsigned imageIndex, long texture_id) {
 	sdlex_render_flush(imageIndex);
 	bind_texture(imageIndex, get_texviewmap(texture_views, texture_id), get_texsamplermap(texture_samplers, texture_id), get_texinfomap(texture_infos, texture_id));
 	sdlex_render_init(get_vk_swap_chain(), get_vk_pipeline(), 0);
+}
+
+SDL_Rect texture_frame_by_id(long textureId) {
+	if (software_fallback_state.IsEnabled) {
+		return texture_frame(get_softwaretexmap(software_textures, textureId));
+	}
+	SDL_Rect r;
+	r.x = r.y = 0;
+	r.w = get_texinfomap(texture_infos, textureId).extent.width;
+	r.h = get_texinfomap(texture_infos, textureId).extent.height;
+	return r;
 }
 
 VkImageCreateInfo get_texture2d_info(long textureId) {

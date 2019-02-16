@@ -336,7 +336,6 @@ VkInstance initialize_vulkan(SDL_Window * window, unsigned appVer) {
 	createInfo.enabledExtensionCount = count;
 	createInfo.ppEnabledExtensionNames = extensions;
 	createInfo.pApplicationInfo = &appInfo;
-
 #ifdef SDLEX_VK_VALIDATION
 	const char* validationLayers[1];
 	validationLayers[0] = "VK_LAYER_LUNARG_standard_validation";
