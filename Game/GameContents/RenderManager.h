@@ -1,5 +1,6 @@
 #ifndef RENDER_MANAGER_H
 #define RENDER_MANAGER_H
+#include <stdlib.h>
 #include "../SDLEx/SDLWithPlugins.h"
 #include "../SDLEx/MathEx/MathEx.h"
 #include "../SDLEx/Utils/Deque.h"
@@ -43,5 +44,13 @@ void unregister_renderable(Renderable * renderable);
 void sort_layer_for_batching(int layerId);
 void render_layer(unsigned imageId, int layerId);
 void render_all_layers(unsigned imageId);
+
+inline Renderable * create_empty_renderable() {
+	Renderable * r = malloc(sizeof(Renderable));
+	r->Color = vector4_create(1.0f, 1.0f, 1.0f, 1.0f);
+	r->Rotation = 0.0f;
+	r->Scale = vector2_one();
+	return r;
+}
 
 #endif
