@@ -52,8 +52,16 @@ void sort_layer_for_batching(int layerId) {
 	}
 }
 
+inline int _is_layer_additive(int layerId) {
+	return layerId == RENDER_LAYER_ENTITY_6 || layerId == RENDER_LAYER_ENTITY_9;
+}
+
 void render_layer(unsigned imageId, int layerId) {
 	sort_layer_for_batching(layerId);
+	if (_is_layer_additive(layerId))
+		sdlex_set_blend_mode(SDLEX_BLEND_MODE_ADDITIVE);
+	else
+		sdlex_set_blend_mode(SDLEX_BLEND_MODE_ALPHABLEND);
 	long current_texture_id = -1;
 	long count = 0;
 	for (unsigned i = 0; i < layers[layerId]->Size; i++) {
@@ -75,6 +83,7 @@ void render_layer(unsigned imageId, int layerId) {
 		origin = vector2_scl(origin, 0.5f);
 		sdlex_render_texture_region_ex(imageId, item->Center, origin, item->Rotation, item->Scale, item->Color, item->TextureRegion.Rect);
 	}
+	sdlex_render_flush(imageId);
 }
 
 void render_all_layers(unsigned imageId) {
