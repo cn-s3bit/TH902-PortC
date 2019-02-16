@@ -15,7 +15,7 @@ typedef struct Projectile {
 	Renderable * RenderablePt;
 	Vector4 Color;
 	void * CustomData;
-	void (*AI)(void * proj);
+	void (*AI)(struct Projectile * proj);
 } Projectile;
 
 typedef struct ProjectileTypeDescriptor {
