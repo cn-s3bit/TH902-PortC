@@ -95,9 +95,9 @@ long long randomxs_get_state(RandomXS128 * thiz, long seed) {
 
 long long murmurHash3(long long x) {
 	x ^= (unsigned long long)x >> 33;
-	x *= 0xff51afd7ed558ccdL;
+	x *= 0xff51afd7ed558ccdLL;
 	x ^= x >> 33;
-	x *= 0xc4ceb9fe1a85ec53L;
+	x *= 0xc4ceb9fe1a85ec53LL;
 	x ^= x >> 33;
 	return (long long)x;
 }
