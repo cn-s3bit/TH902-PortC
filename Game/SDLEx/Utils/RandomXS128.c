@@ -5,14 +5,13 @@
 long long murmurHash3(long long x);
 
 RandomXS128 * randomxs_create_no_seed() {
-	srand((int)time(0));
 	RandomXS128 * thiz = (RandomXS128 *)calloc(1, sizeof(RandomXS128));
 	return thiz;
 }
 
 RandomXS128 * randomxs_create_random_seed() {
 	RandomXS128 * thiz = randomxs_create_no_seed();
-	randomxs_set_seed(thiz, rand());
+	randomxs_set_seed(thiz, (long long)time(NULL));
 	return thiz;
 }
 
@@ -62,8 +61,8 @@ double randomxs_next_double(RandomXS128 * thiz) {
 	return ((unsigned long long)randomxs_next_long(thiz) >> 11) * NORM_DOUBLE;
 }
 
-double randomxs_next_float(RandomXS128 * thiz) {
-	return (float)((unsigned long long)(randomxs_next_long(thiz) >> 40) * NORM_FLOAT);
+float randomxs_next_float(RandomXS128 * thiz) {
+	return (float)(((unsigned long long)randomxs_next_long(thiz) >> 40) * NORM_FLOAT);
 }
 
 SDL_bool randomxs_next_boolean(RandomXS128 * thiz) {
@@ -75,13 +74,13 @@ void randomxs_next_bytes(RandomXS128 * thiz, jbyte * bytes, size_t size) {
 	int i = size;
 	while (i != 0) {
 		n = i < 8 ? i : 8; /*min(i, 8);*/
-		for (long bits = randomxs_next_long(thiz); n-- != 0; bits >>= 8)
+		for (long long bits = randomxs_next_long(thiz); n-- != 0; bits >>= 8)
 			bytes[--i] = (jbyte)bits;
 	}
 }
 
 void randomxs_set_seed(RandomXS128 * thiz, long long seed) {
-	long seed0 = murmurHash3(seed == 0 ? SDL_MIN_SINT64 : seed);
+	long long seed0 = murmurHash3(seed == 0 ? SDL_MIN_SINT64 : seed);
 	randomxs_set_state(thiz, seed0, murmurHash3(seed0));
 }
 

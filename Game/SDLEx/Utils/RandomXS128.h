@@ -18,7 +18,7 @@ long randomxs_next(RandomXS128 * thiz, long bits); /*protected final*/
 long randomxs_next_int(RandomXS128 * thiz);
 long randomxs_next_int_limited(RandomXS128 * thiz, long n); /*n -> final*/
 double randomxs_next_double(RandomXS128 * thiz);
-double randomxs_next_float(RandomXS128 * thiz);
+float randomxs_next_float(RandomXS128 * thiz);
 SDL_bool randomxs_next_boolean(RandomXS128 * thiz);
 void randomxs_next_bytes(RandomXS128 * thiz, jbyte * bytes, size_t size); /*bytes is an array. size is its length.*/
 void randomxs_set_seed(RandomXS128 * thiz, long long seed); /*seed -> final*/
