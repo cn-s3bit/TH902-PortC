@@ -5,6 +5,9 @@
 struct Resources {
 	struct {
 		long Barrages;
+		long Exit;
+		long Background[5];
+		long StoryMode;
 	} Images;
 	struct {
 		Mix_Chunk * Biu;

@@ -16,8 +16,18 @@ inline Mix_Chunk * _load_se(const char * name) {
 
 void load_resources() {
 	resources.Images.Barrages = load_texture2d(RESOURCE_FOLDER "Game/Image/Barrages.0.png");
+#define LOADBG(id) resources.Images.Background[id - 1] = load_texture2d(RESOURCE_FOLDER "Game/Image/Backgrounds/Background" #id ".jpg")
+	LOADBG(1);
+	LOADBG(2);
+	LOADBG(3);
+	LOADBG(4);
+	LOADBG(5);
+#undef LOADBG
+	resources.Images.Exit = load_texture2d(RESOURCE_FOLDER "Game/Image/UI/Exit.png");
+	resources.Images.StoryMode = load_texture2d(RESOURCE_FOLDER "Game/Image/UI/StoryMode.png");
 	Mix_Init(MIX_INIT_MP3);
-	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
+	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 512);
+	const char * x = SDL_GetError();
 	resources.BGM.StartingScene = Mix_LoadMUS(RESOURCE_FOLDER "Game/BGM/Starting Scene.mp3");
 	resources.SE.Biu = _load_se("pldead00");
 	resources.SE.Cat = _load_se("cat00");
