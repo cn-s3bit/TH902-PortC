@@ -27,6 +27,7 @@ void load_resources() {
 	resources.Images.StoryMode = load_texture2d(RESOURCE_FOLDER "Game/Image/UI/StoryMode.png");
 	resources.Images.ReimuAnim = load_texture2d(RESOURCE_FOLDER "Game/Image/Players/Reimu.png");
 	resources.Images.ReimuOneFrame = load_texture2d(RESOURCE_FOLDER "Game/Image/Players/ReimuOneFrame.png");
+	resources.Images.JudgeDisplay = load_texture2d(RESOURCE_FOLDER "Game/Image/Players/JudgeDisplay.png");
 	Mix_Init(MIX_INIT_MP3);
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 512);
 	const char * x = SDL_GetError();
@@ -43,6 +44,7 @@ void release_resources() {
 	dispose_texture2d(resources.Images.StoryMode);
 	dispose_texture2d(resources.Images.ReimuAnim);
 	dispose_texture2d(resources.Images.ReimuOneFrame);
+	dispose_texture2d(resources.Images.JudgeDisplay);
 	for (int i = 0; i < 5; i++)
 		dispose_texture2d(resources.Images.Background[i]);
 	Mix_FreeMusic(resources.BGM.StartingScene);

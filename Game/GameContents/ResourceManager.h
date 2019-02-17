@@ -10,6 +10,7 @@ struct Resources {
 		long StoryMode;
 		long ReimuOneFrame;
 		long ReimuAnim;
+		long JudgeDisplay;
 	} Images;
 	struct {
 		Mix_Chunk * Biu;
