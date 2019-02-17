@@ -46,6 +46,9 @@
     <Filter Include="Source Files\Contents">
       <UniqueIdentifier>{cc513f09-6338-4aa3-9272-840b123e8e0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Contents\Player">
+      <UniqueIdentifier>{7529ad95-5a4d-40b9-a252-0c2ffd5f0807}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VCSDL\include\SDL_vulkan.h">
@@ -366,6 +369,9 @@
     <ClInclude Include="Game\UI\Screens.h">
       <Filter>Source Files\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Contents\Player\Players.h">
+      <Filter>Source Files\Contents\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="VCSDL\lib\win32\SDL2main.lib">
@@ -493,6 +499,9 @@
     </ClCompile>
     <ClCompile Include="Game\UI\FightScreen.c">
       <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Contents\Player\PlayerReimuA.c">
+      <Filter>Source Files\Contents\Player</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

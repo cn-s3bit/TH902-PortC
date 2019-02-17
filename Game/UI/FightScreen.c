@@ -2,11 +2,15 @@
 #include "../GameContents/RenderManager.h"
 #include "../GameContents/ResourceManager.h"
 #include "../GameContents/BasicProjectile.h"
+#include "../Contents/Player/Players.h"
 #include "../Constants.h"
 #include "../SDLEx/MathEx/MathEx.h"
 #include "../SDLEx/Utils/RandomPool.h"
 
 Projectile * projs[1024];
+enum PlayerType player_type = PLAYER_REIMU_A;
+
+void * player;
 
 
 void test_ai0(Projectile * proj) {
@@ -17,6 +21,8 @@ void test_ai0(Projectile * proj) {
 }
 
 static void initialize() {
+	player = get_player_interface(player_type).initialize(vector2_create(280.0f, 620.0f));
+	
 	for (int i = 0; i < 1024; i++) {
 		projs[i] = alloc_projectile();
 		projs[i]->Type = rand() % 7 + 9;
@@ -27,7 +33,9 @@ static void initialize() {
 }
 
 static int update() {
+	get_player_interface(player_type).update(player);
 	update_projectiles();
+	return 1;
 }
 
 static void render() {
@@ -37,6 +45,7 @@ static void render() {
 }
 
 static short handle_event(SDL_Event ev) {
+	get_player_interface(player_type).handle_event(player, ev);
 	if (ev.type == SDL_KEYDOWN) {
 		return NO_SIGNAL;
 	}

@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Constants.h" />
+    <ClInclude Include="Game\Contents\Player\Players.h" />
     <ClInclude Include="Game\GameContents\BasicProjectile.h" />
     <ClInclude Include="Game\GameContents\RenderManager.h" />
     <ClInclude Include="Game\GameContents\ResourceManager.h" />
@@ -211,6 +212,7 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Contents\Player\PlayerReimuA.c" />
     <ClCompile Include="Game\EntryPoint.c" />
     <ClCompile Include="Game\GameContents\BasicProjectile.c" />
     <ClCompile Include="Game\GameContents\RenderManager.c" />
