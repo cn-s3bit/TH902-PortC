@@ -8,6 +8,8 @@ struct Resources {
 		long Exit;
 		long Background[5];
 		long StoryMode;
+		long ReimuOneFrame;
+		long ReimuAnim;
 	} Images;
 	struct {
 		Mix_Chunk * Biu;

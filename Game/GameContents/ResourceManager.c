@@ -25,6 +25,8 @@ void load_resources() {
 #undef LOADBG
 	resources.Images.Exit = load_texture2d(RESOURCE_FOLDER "Game/Image/UI/Exit.png");
 	resources.Images.StoryMode = load_texture2d(RESOURCE_FOLDER "Game/Image/UI/StoryMode.png");
+	resources.Images.ReimuAnim = load_texture2d(RESOURCE_FOLDER "Game/Image/Players/Reimu.png");
+	resources.Images.ReimuOneFrame = load_texture2d(RESOURCE_FOLDER "Game/Image/Players/ReimuOneFrame.png");
 	Mix_Init(MIX_INIT_MP3);
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 512);
 	const char * x = SDL_GetError();
@@ -37,6 +39,12 @@ void load_resources() {
 
 void release_resources() {
 	dispose_texture2d(resources.Images.Barrages);
+	dispose_texture2d(resources.Images.Exit);
+	dispose_texture2d(resources.Images.StoryMode);
+	dispose_texture2d(resources.Images.ReimuAnim);
+	dispose_texture2d(resources.Images.ReimuOneFrame);
+	for (int i = 0; i < 5; i++)
+		dispose_texture2d(resources.Images.Background[i]);
 	Mix_FreeMusic(resources.BGM.StartingScene);
 	Mix_FreeChunk(resources.SE.Biu);
 	Mix_FreeChunk(resources.SE.Cat);
