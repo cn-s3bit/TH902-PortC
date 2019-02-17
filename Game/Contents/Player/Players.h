@@ -10,6 +10,7 @@ typedef struct PlayerReimuA {
 	Vector2 Position;
 	Vector2 Velocity;
 	Renderable Renderer;
+	Renderable JudgeDisp;
 } PlayerReimuA;
 
 typedef struct PlayerInterface {
