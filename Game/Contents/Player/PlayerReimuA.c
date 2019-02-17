@@ -10,9 +10,11 @@ inline void sync_renderer_player_reimu_a(PlayerReimuA * thiz) {
 }
 
 PlayerReimuA * initialize_player_reimu_a(Vector2 position) {
-	PlayerReimuA * p = malloc(sizeof(PlayerReimuA));
+	PlayerReimuA * p = calloc(1, sizeof(PlayerReimuA));
 	p->Position = position;
 	p->Velocity = vector2_zero();
+	p->_anim = 0;
+	p->_animTimer = 0;
 	p->Renderer.Color = vector4_create(1.0f, 1.0f, 1.0f, 1.0f);
 	p->Renderer.Layer = RENDER_LAYER_ENTITY_2;
 	p->Renderer.Rotation = 0.0f;
@@ -27,6 +29,13 @@ PlayerReimuA * initialize_player_reimu_a(Vector2 position) {
 	return p;
 }
 
+inline SDL_Rect anim_rect(int t1, int c) {
+	SDL_Rect r = { .w = 128,.h = 190 };
+	r.x = c * 128;
+	r.y = t1 * 190;
+	return r;
+}
+
 void update_player_reimu_a(void * thiz) {
 	PlayerReimuA * p = (PlayerReimuA *)thiz;
 	p->Velocity = vector2_zero();
@@ -38,6 +47,24 @@ void update_player_reimu_a(void * thiz) {
 		p->Velocity = vector2_adds(p->Velocity, -1.0f, 0.0f);
 	if (get_action(p->Action, 5))
 		p->Velocity = vector2_adds(p->Velocity, 1.0f, 0.0f);
+	if (p->_anim != 2 && p->Velocity.X > 0.0f)
+		p->_anim = 2, p->_animTimer = 0;
+	else if (p->_anim != 1 && p->Velocity.X < 0.0f)
+		p->_anim = 1, p->_animTimer = 0;
+	else if (p->_anim != 0 && p->Velocity.X == 0.0f)
+		p->_anim = 0, p->_animTimer = 0;
+	if (p->_anim == 0) {
+		p->Renderer.TextureRegion.Rect = anim_rect(p->_anim, p->_animTimer / 5);
+		++p->_animTimer;
+		if (p->_animTimer >= 40)
+			p->_animTimer = 0;
+	}
+	else {
+		p->Renderer.TextureRegion.Rect = anim_rect(p->_anim, p->_animTimer / 4);
+		++p->_animTimer;
+		if (p->_animTimer >= 32)
+			p->_animTimer = 0;
+	}
 	p->Velocity = vector2_scl(vector2_unit(p->Velocity), 6.0f);
 	p->Position = vector2_add(p->Position, p->Velocity);
 	sync_renderer_player_reimu_a(p);

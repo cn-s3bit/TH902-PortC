@@ -9,7 +9,8 @@ enum RenderLayer {
 	RENDER_LAYER_BACKGROUND = 1,  /* Background */
 	RENDER_LAYER_ENTITY_0 = 4,  /* Bullet of Player 1 */
 	RENDER_LAYER_ENTITY_1 = 8,  /* Bullet of Player 2 */
-	RENDER_LAYER_ENTITY_2 = 12,  /* Player & Player Wing */
+	RENDER_LAYER_ENTITY_2 = 12,  /* Player */
+	RENDER_LAYER_ENTITY_2_ADDITIONAL = 13,  /* Judge Display & Player Wing */
 	RENDER_LAYER_ENTITY_3 = 16,  /* NPC, except Boss */
 	RENDER_LAYER_ENTITY_4 = 20,  /* Enemy Bullets Lower Layer 1 */
 	RENDER_LAYER_ENTITY_5 = 24,  /* Enemy Bullets Lower Layer 2 */

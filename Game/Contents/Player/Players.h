@@ -5,6 +5,8 @@
 #include "../../GameContents/BasicProjectile.h"
 typedef struct PlayerReimuA {
 	unsigned long Action;
+	short _anim;
+	short _animTimer;
 	Vector2 Position;
 	Vector2 Velocity;
 	Renderable Renderer;
