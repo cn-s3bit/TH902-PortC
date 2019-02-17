@@ -84,6 +84,7 @@ VkImageView create_image_view(VkImage image, VkFormat format);
 void transition_image_layout(VkImage image, VkImageLayout oldLayout, VkImageLayout newLayout);
 void copy_buffer_to_image(VkBuffer buffer, VkImage image, unsigned width, unsigned height);
 long load_texture2d(const char * filename);
+long load_texture2d_from_surface(SDL_Surface * raw);
 void dispose_texture2d(long texture_id);
 void bind_texture2d(unsigned imageIndex, long texture_id);
 void bind_all_images_texture2d(long texture_id);

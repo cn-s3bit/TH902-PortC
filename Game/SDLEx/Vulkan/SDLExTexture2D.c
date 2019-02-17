@@ -218,6 +218,10 @@ long load_texture2d(const char * filename) {
 		software_textures = create_softwaretexmap();
 	}
 	SDL_Surface * raw = IMG_Load(filename);
+	return load_texture2d_from_surface(raw);
+}
+
+long load_texture2d_from_surface(SDL_Surface * raw) {
 	if (!raw) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to Load Texture2D: %s", SDL_GetError());
 		return -1;
