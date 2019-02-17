@@ -74,6 +74,8 @@ inline Vector2 vector2_scl(Vector2 a, float scalar) {
 }
 
 inline Vector2 vector2_unit(Vector2 a) {
+	if (vector2_lenSqr(a) == 0.0f)
+		return vector2_zero();
 	return vector2_scl(a, 1.0f / vector2_len(a));
 }
 
