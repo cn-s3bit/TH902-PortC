@@ -5,6 +5,7 @@
 #include "SDLEx/Utils/MathUtils.h"
 #include "SDLEx/Utils/FileUtils.h"
 #include "SDLEx/Utils/RandomPool.h"
+#include "SDLEx/Utils/Ellipse.h"
 #include "SDLEx/MathEx/MathEx.h"
 #include "Constants.h"
 #include "SDLEx/Vulkan/SDLExVulkan.h"

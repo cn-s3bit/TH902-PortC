@@ -92,7 +92,7 @@ Ellipse * ellipse_set_size(Ellipse * thiz, float width, float height) {
 }
 
 float ellipse_area(Ellipse * thiz) {
-	return M_PI * (thiz->width * thiz->height) / 4;
+	return (float)M_PI * (thiz->width * thiz->height) / 4;
 }
 
 float ellipse_circumference(Ellipse * thiz) {
@@ -109,7 +109,14 @@ float ellipse_circumference(Ellipse * thiz) {
 }
 
 int ellipse_hash_code(Ellipse * thiz) {
+	union { int a; float b; } caster;
 	int prime = 53; /*final*/
 	int result = 1;
+#define floatToRawIntBits(x) (caster.b = x, caster.a)
+	result = prime * result + floatToRawIntBits(thiz->height);
+	result = prime * result + floatToRawIntBits(thiz->width);
+	result = prime * result + floatToRawIntBits(thiz->x);
+	result = prime * result + floatToRawIntBits(thiz->y);
+#undef floatToRawIntBits
 	return result;
 }
