@@ -33,6 +33,7 @@
     <ClInclude Include="Game\SDLEx\SDLWithPlugins.h" />
     <ClInclude Include="Game\SDLEx\Utils\ArrayList.h" />
     <ClInclude Include="Game\SDLEx\Utils\Deque.h" />
+    <ClInclude Include="Game\SDLEx\Utils\Ellipse.h" />
     <ClInclude Include="Game\SDLEx\Utils\FileUtils.h" />
     <ClInclude Include="Game\SDLEx\Utils\HashMap.h" />
     <ClInclude Include="Game\SDLEx\Utils\MathUtils.h" />
@@ -221,6 +222,7 @@
     <ClCompile Include="Game\GameContents\ResourceManager.c" />
     <ClCompile Include="Game\SDLEx\Utils\ArrayList.c" />
     <ClCompile Include="Game\SDLEx\Utils\Deque.c" />
+    <ClCompile Include="Game\SDLEx\Utils\Ellipse.c" />
     <ClCompile Include="Game\SDLEx\Utils\FileUtils.c" />
     <ClCompile Include="Game\SDLEx\Utils\HashMap.c" />
     <ClCompile Include="Game\SDLEx\Utils\MemoryPool.c" />
