@@ -1,7 +1,7 @@
 #ifndef SDLEX_MATHEX_VECTOR2_H
 #define SDLEX_MATHEX_VECTOR2_H
 #include <stdio.h>
-#include <math.h>
+#include "../SDLWithPlugins.h"
 #include "MathExConsts.h"
 
 typedef struct Vector2 {
