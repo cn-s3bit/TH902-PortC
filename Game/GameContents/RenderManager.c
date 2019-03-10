@@ -31,6 +31,8 @@ void unregister_renderable(Renderable * renderable) {
 }
 
 static int qsort_compare_renderable(const void * a, const void * b) {
+	if ((*(Renderable **)a) == (*(Renderable **)b))
+		return 0;
 	if ((*(Renderable **)a) == NULL)
 		return -1;
 	if ((*(Renderable **)b) == NULL)
