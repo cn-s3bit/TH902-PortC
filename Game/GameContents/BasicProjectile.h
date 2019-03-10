@@ -33,5 +33,6 @@ void raii_projectile_renderable_layered(Projectile * proj, enum RenderLayer laye
 void free_projectile(Projectile * proj);
 void sync_proj_renderable(Projectile * proj);
 void update_projectiles();
+ProjectileTypeDescriptor get_projectile_type_descritor(int type);
 
 #endif

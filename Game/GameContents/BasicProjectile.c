@@ -270,6 +270,10 @@ void sync_proj_renderable(Projectile * proj) {
 	}
 }
 
+ProjectileTypeDescriptor get_projectile_type_descritor(int type) {
+	return projectile_types[type];
+}
+
 void update_basic_projectile(Projectile * proj) {
 	if (proj->AI)
 		proj->AI(proj);
@@ -319,9 +323,11 @@ void raii_projectile_renderable_layered(Projectile * proj, enum RenderLayer laye
 
 void free_projectile(Projectile * proj) {
 	proj->Active = 0;
-	unregister_renderable(proj->RenderablePt);
-	free(proj->RenderablePt);
-	proj->RenderablePt = NULL;
+	if (proj->RenderablePt) {
+		unregister_renderable(proj->RenderablePt);
+		free(proj->RenderablePt);
+		proj->RenderablePt = NULL;
+	}
 	push_deque_tail(free_projectile_ids, &proj->WhoAmI);
 }
 
