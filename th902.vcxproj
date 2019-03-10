@@ -22,6 +22,7 @@
     <ClInclude Include="Game\Constants.h" />
     <ClInclude Include="Game\Contents\Player\Players.h" />
     <ClInclude Include="Game\GameContents\BasicProjectile.h" />
+    <ClInclude Include="Game\GameContents\CrazyStormWin32Interop.h" />
     <ClInclude Include="Game\GameContents\JudgingSystem.h" />
     <ClInclude Include="Game\GameContents\RenderManager.h" />
     <ClInclude Include="Game\GameContents\ResourceManager.h" />
@@ -217,6 +218,7 @@
     <ClCompile Include="Game\Contents\Player\PlayerReimuA.c" />
     <ClCompile Include="Game\EntryPoint.c" />
     <ClCompile Include="Game\GameContents\BasicProjectile.c" />
+    <ClCompile Include="Game\GameContents\CrazyStormWin32Interop.c" />
     <ClCompile Include="Game\GameContents\JudgingSystem.c" />
     <ClCompile Include="Game\GameContents\RenderManager.c" />
     <ClCompile Include="Game\GameContents\ResourceManager.c" />
@@ -251,21 +253,25 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">

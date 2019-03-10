@@ -2,6 +2,7 @@
 #include "../GameContents/RenderManager.h"
 #include "../GameContents/ResourceManager.h"
 #include "../GameContents/BasicProjectile.h"
+#include "../GameContents/CrazyStormWin32Interop.h"
 #include "../Contents/Player/Players.h"
 #include "../Constants.h"
 #include "../SDLEx/MathEx/MathEx.h"
@@ -20,20 +21,25 @@ void test_ai0(Projectile * proj) {
 	proj->Accel = vector2_scl(vector2_unit(vector2_create(x, y)), 0.03f);
 }
 
+CrazyStormInstance * csinstance;
+
 static void initialize() {
+	free_projectile(alloc_projectile());
 	player = get_player_interface(player_type).initialize(vector2_create(280.0f, 620.0f));
-	
-	for (int i = 0; i < 1024; i++) {
+	csinstance = crazy_storm_start(RESOURCE_FOLDER "Game/CrazyStormRT.exe");
+	crazy_storm_load_mbg(csinstance, RESOURCE_FOLDER "Game/Image/Danmaku/LD.mbg");
+	/*for (int i = 0; i < 1024; i++) {
 		projs[i] = alloc_projectile();
 		projs[i]->Type = rand() % 7 + 9;
 		projs[i]->Position = vector2_create(480.0f, 360.0f);
 		projs[i]->AI = test_ai0;
 		raii_projectile_renderable_layered(projs[i], RENDER_LAYER_ENTITY_6);
-	}
+	}*/
 }
 
 static int update() {
 	get_player_interface(player_type).update(player);
+	crazy_storm_update(csinstance);
 	update_projectiles();
 	return 1;
 }
@@ -53,7 +59,7 @@ static short handle_event(SDL_Event ev) {
 }
 
 static void destroy() {
-
+	crazy_storm_terminate(csinstance);
 }
 
 struct Screen fight_screen = {
