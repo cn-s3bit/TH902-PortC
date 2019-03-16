@@ -17,6 +17,7 @@ typedef struct PlayerInterface {
 	void(*update)(void * thiz);
 	void *(*initialize)(Vector2 position);
 	void(*handle_event)(void * thiz, SDL_Event ev);
+	Vector2(*get_position)(void * thiz);
 } PlayerInterface;
 
 enum PlayerType {

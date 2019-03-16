@@ -97,8 +97,14 @@ void handle_event_reimu_a(void * thiz, SDL_Event ev) {
 #undef update_action
 }
 
+Vector2 get_player_reimu_a_position(void * thiz) {
+	PlayerReimuA * p = (PlayerReimuA *)thiz;
+	return p->Position;
+}
+
 const PlayerInterface ReimuA = {
 	.update = update_player_reimu_a,
 	.initialize = initialize_player_reimu_a,
-	.handle_event = handle_event_reimu_a
+	.handle_event = handle_event_reimu_a,
+	.get_position = get_player_reimu_a_position
 };
