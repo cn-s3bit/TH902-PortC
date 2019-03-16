@@ -91,6 +91,8 @@ static void _fetch_projs(CrazyStormInstance * instance) {
 		rot = *(float *)(buf + parsed);
 		parsed += 4;
 		if (b == 0) {
+			if (alpha >= 4095)
+				break;
 			if (alpha >= instance->_alphablendActive) {
 				instance->_alphablend[alpha].Layer = RENDER_LAYER_ENTITY_7;
 				register_renderable(&instance->_alphablend[alpha]);
@@ -100,6 +102,8 @@ static void _fetch_projs(CrazyStormInstance * instance) {
 			alpha++;
 		}
 		else {
+			if (add >= 4095)
+				break;
 			if (add >= instance->_additiveActive) {
 				instance->_additive[add].Layer = RENDER_LAYER_ENTITY_6;
 				register_renderable(&instance->_additive[add]);
