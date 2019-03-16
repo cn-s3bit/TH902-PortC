@@ -129,8 +129,10 @@
     <ClInclude Include="VCSDL\include\SDL_version.h" />
     <ClInclude Include="VCSDL\include\SDL_video.h" />
     <ClInclude Include="VCSDL\include\SDL_vulkan.h" />
+    <ClInclude Include="VCSDL\include\VkExt\vk_mem_alloc.h" />
   </ItemGroup>
   <ItemGroup>
+    <Library Include="VCSDL\include\VkExt\VulkanMemoryAllocator.lib" />
     <Library Include="VCSDL\lib\win32\SDL2.lib" />
     <Library Include="VCSDL\lib\win32\SDL2main.lib" />
     <Library Include="VCSDL\lib\win32\SDL2_image.lib" />
@@ -306,7 +308,7 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(ProjectDir)VCSDL\include;$(VK_SDK_PATH)\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>CompileAsC</CompileAs>
-      <FloatingPointModel>Strict</FloatingPointModel>
+      <FloatingPointModel>Precise</FloatingPointModel>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
     </ClCompile>
     <Link>
@@ -327,8 +329,9 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>$(ProjectDir)VCSDL\include;$(VK_SDK_PATH)\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>CompileAsC</CompileAs>
-      <FloatingPointModel>Strict</FloatingPointModel>
+      <FloatingPointModel>Precise</FloatingPointModel>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <ExceptionHandling>false</ExceptionHandling>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
@@ -346,7 +349,7 @@
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)VCSDL\include;$(VK_SDK_PATH)\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>CompileAsC</CompileAs>
-      <FloatingPointModel>Strict</FloatingPointModel>
+      <FloatingPointModel>Precise</FloatingPointModel>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
       <PreprocessorDefinitions>
@@ -364,11 +367,12 @@
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)VCSDL\include;$(VK_SDK_PATH)\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>CompileAsC</CompileAs>
-      <FloatingPointModel>Strict</FloatingPointModel>
+      <FloatingPointModel>Precise</FloatingPointModel>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
       <PreprocessorDefinitions>
       </PreprocessorDefinitions>
+      <ExceptionHandling>false</ExceptionHandling>
     </ClCompile>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)VCSDL\lib\win32\*.dll" "$(TargetDir)"</Command>
