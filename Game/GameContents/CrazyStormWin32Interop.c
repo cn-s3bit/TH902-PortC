@@ -6,10 +6,11 @@ static long _send_command(CrazyStormInstance * instance, const char * command) {
 	return written;
 }
 
-inline void _set_renderable(Renderable * renderable, float x, float y, float w, float h, long t) {
+inline void _set_renderable(Renderable * renderable, float x, float y, float w, float h, long t, float r, float g, float b, float a, float rot) {
 	renderable->Center = vector2_create(x, y);
 	renderable->Scale = vector2_create(w, h);
-	renderable->Color = vector4_create(1.0f, 1.0f, 1.0f, 1.0f);
+	renderable->Color = vector4_create(r, g, b, a);
+	renderable->Rotation = rot;
 	renderable->TextureRegion.TextureID = resources.Images.Barrages;
 	renderable->TextureRegion.Rect = get_projectile_type_descritor(t + 1).Region;
 }
@@ -20,8 +21,22 @@ static void _fetch_projs(CrazyStormInstance * instance) {
 	long read;
 	long avail = 0;
 	long remain;
-	while (avail < 10)
-		PeekNamedPipe(instance->StdOutRead, NULL, 0, NULL, &avail, &remain), Sleep(1);
+	long code = STILL_ACTIVE;
+	while (avail < 10 && code == STILL_ACTIVE) {
+		PeekNamedPipe(instance->StdOutRead, NULL, 0, NULL, &avail, &remain);
+		Sleep(1);
+		if (!GetExitCodeProcess(instance->ProcessInformation.hProcess, &code))
+			code = -1;
+	}
+	if (code != STILL_ACTIVE) {
+		SDL_Log("Error: CrazyStormRT Stopped working with code %d\n", code);
+		char buffer[1024];
+		ReadFile(instance->StdOutRead, buffer, 1023, &read, NULL);
+		buffer[read] = '\0';
+		SDL_Log("Error: CrazyStormRT Exit Message: %s", buffer);
+		crazy_storm_terminate(instance);
+		return;
+	}
 	ReadFile(instance->StdOutRead, size, 10, &read, NULL);
 	size[10] = '\0';
 	long rsize;
@@ -30,14 +45,27 @@ static void _fetch_projs(CrazyStormInstance * instance) {
 		return;
 	char * buf = malloc(rsize);
 	avail = 0;
-	while (avail < rsize)
-		PeekNamedPipe(instance->StdOutRead, NULL, 0, NULL, &avail, &remain), Sleep(1);
+	while (avail < rsize && code == STILL_ACTIVE) {
+		PeekNamedPipe(instance->StdOutRead, NULL, 0, NULL, &avail, &remain);
+		Sleep(1);
+		if (!GetExitCodeProcess(instance->ProcessInformation.hProcess, &code))
+			code = -1;
+	}
+	if (code != STILL_ACTIVE) {
+		SDL_Log("Error: CrazyStormRT Stopped working with code %d\n", code);
+		char buffer[1024];
+		ReadFile(instance->StdOutRead, buffer, 1023, &read, NULL);
+		buffer[read] = '\0';
+		SDL_Log("Error: CrazyStormRT Exit Message: %s", buffer);
+		crazy_storm_terminate(instance);
+		return;
+	}
 	ReadFile(instance->StdOutRead, buf, rsize, &read, NULL);
 	long parsed = 0;
 	long add = 0;
 	long alpha = 0;
 	while (parsed < rsize) {
-		float x, y, w, h;
+		float x, y, w, h, r, g, blue, al, rot;
 		long t;
 		unsigned char b;
 		x = *(float *)(buf + parsed);
@@ -52,13 +80,23 @@ static void _fetch_projs(CrazyStormInstance * instance) {
 		parsed += 4;
 		b = *(unsigned char *)(buf + parsed);
 		parsed += 1;
+		r = *(float *)(buf + parsed);
+		parsed += 4;
+		g = *(float *)(buf + parsed);
+		parsed += 4;
+		blue = *(float *)(buf + parsed);
+		parsed += 4;
+		al = *(float *)(buf + parsed);
+		parsed += 4;
+		rot = *(float *)(buf + parsed);
+		parsed += 4;
 		if (b == 0) {
 			if (alpha >= instance->_alphablendActive) {
 				instance->_alphablend[alpha].Layer = RENDER_LAYER_ENTITY_7;
 				register_renderable(&instance->_alphablend[alpha]);
 				++instance->_alphablendActive;
 			}
-			_set_renderable(&instance->_alphablend[alpha], x, y, w, h, t);
+			_set_renderable(&instance->_alphablend[alpha], x, y, w, h, t, r, g, blue, al, rot);
 			alpha++;
 		}
 		else {
@@ -67,7 +105,7 @@ static void _fetch_projs(CrazyStormInstance * instance) {
 				register_renderable(&instance->_additive[add]);
 				++instance->_additiveActive;
 			}
-			_set_renderable(&instance->_additive[add], x, y, w, h, t);
+			_set_renderable(&instance->_additive[add], x, y, w, h, t, r, g, blue, al, rot);
 			add++;
 		}
 	}
@@ -83,7 +121,7 @@ static void _fetch_projs(CrazyStormInstance * instance) {
 }
 
 CrazyStormInstance * crazy_storm_start(const char * path2exe) {
-	STARTUPINFO si;
+	STARTUPINFOA si;
 	PROCESS_INFORMATION pi;
 	CrazyStormInstance * retVal = calloc(1, sizeof(CrazyStormInstance));
 
@@ -117,6 +155,10 @@ CrazyStormInstance * crazy_storm_start(const char * path2exe) {
 	return retVal;
 }
 
+void crazy_storm_register_player_pos(CrazyStormInstance * instance, Vector2(*generator)(void)) {
+	instance->_playerPosGenerator = generator;
+}
+
 void crazy_storm_load_mbg(CrazyStormInstance * instance, const char * path2mbg) {
 	char buf[512];
 	sprintf(buf, "o%s\r\n", path2mbg);
@@ -124,7 +166,23 @@ void crazy_storm_load_mbg(CrazyStormInstance * instance, const char * path2mbg) 
 }
 
 void crazy_storm_update(CrazyStormInstance * instance) {
+	char buf[64];
+	Vector2 ppos = instance->_playerPosGenerator();
+	sprintf(buf, "p%.5f,%.5f\r\n", ppos.X, ppos.Y);
+	_send_command(instance, buf);
 	_send_command(instance, "u\r\n");
+	_fetch_projs(instance);
+}
+
+void crazy_storm_start_update_async(CrazyStormInstance * instance) {
+	char buf[64];
+	Vector2 ppos = instance->_playerPosGenerator();
+	sprintf(buf, "p%.5f,%.5f\r\n", ppos.X, ppos.Y);
+	_send_command(instance, buf);
+	_send_command(instance, "u\r\n");
+}
+
+void crazy_storm_wait_update_async(CrazyStormInstance * instance) {
 	_fetch_projs(instance);
 }
 
