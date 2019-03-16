@@ -318,9 +318,6 @@
     <ClInclude Include="Game\SDLEx\Utils\ArrayList.h">
       <Filter>Source Files\SDLEx\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Game\SDLEx\Utils\Deque.h">
-      <Filter>Source Files\SDLEx\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Game\SDLEx\Utils\FileUtils.h">
       <Filter>Source Files\SDLEx\Utils</Filter>
     </ClInclude>
@@ -383,6 +380,12 @@
     </ClInclude>
     <ClInclude Include="VCSDL\include\VkExt\vk_mem_alloc.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\SDLEx\Utils\Deque.h">
+      <Filter>Source Files\SDLEx\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\SDLEx\MathEx\Intersector.h">
+      <Filter>Source Files\SDLEx\MathEx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -526,6 +529,9 @@
     </ClCompile>
     <ClCompile Include="Game\GameContents\CrazyStormWin32Interop.c">
       <Filter>Source Files\GameContents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\SDLEx\MathEx\Intersector.c">
+      <Filter>Source Files\SDLEx\MathEx</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
