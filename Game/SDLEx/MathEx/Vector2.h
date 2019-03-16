@@ -73,6 +73,26 @@ inline Vector2 vector2_scl(Vector2 a, float scalar) {
 	return a;
 }
 
+inline float vector2_dst2(Vector2 a, Vector2 b) {
+	float ex = a.X - b.X;
+	float ey = a.Y - b.Y;
+	return ex * ex + ey * ey;
+}
+
+inline float vector2_dst(Vector2 a, Vector2 b) {
+	return sqrtf(vector2_dst2(a, b));
+}
+
+inline float vector2_dst2s(float ax, float ay, float bx, float by) {
+	float ex = ax - bx;
+	float ey = ay - by;
+	return ex * ex + ey * ey;
+}
+
+inline float vector2_dsts(float ax, float ay, float bx, float by) {
+	return sqrtf(vector2_dst2s(ax, ay, bx, by));
+}
+
 inline Vector2 vector2_unit(Vector2 a) {
 	if (vector2_lenSqr(a) == 0.0f)
 		return vector2_zero();
