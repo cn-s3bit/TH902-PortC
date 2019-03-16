@@ -15,10 +15,14 @@ typedef struct CrazyStormInstance {
 	Renderable _alphablend[4096];
 	int _additiveActive;
 	int _alphablendActive;
+	Vector2(*_playerPosGenerator)(void);
 } CrazyStormInstance;
 
 CrazyStormInstance * crazy_storm_start(const char * path2exe);
 void crazy_storm_load_mbg(CrazyStormInstance * instance, const char * path2mbg);
 void crazy_storm_update(CrazyStormInstance * instance);
 void crazy_storm_terminate(CrazyStormInstance * instance);
+void crazy_storm_register_player_pos(CrazyStormInstance * instance, Vector2(*generator)(void));
+void crazy_storm_start_update_async(CrazyStormInstance * instance);
+void crazy_storm_wait_update_async(CrazyStormInstance * instance);
 #endif
