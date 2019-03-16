@@ -256,7 +256,6 @@ void sdlex_render_flush(unsigned imageIndex) {
 	VkClearValue clearColor = { 0.0f, 0.0f, 0.0f, 1.0f };
 	renderPassInfo.clearValueCount = 1;
 	renderPassInfo.pClearValues = &clearColor;
-
 	vkCmdBeginRenderPass(swapchain->CommandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
 	vkCmdBindPipeline(swapchain->CommandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline->GraphicsPipeline[(int)SDLExBlendMode]);
@@ -271,6 +270,7 @@ void sdlex_render_flush(unsigned imageIndex) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
 			"Failed to Record Command Buffer: vkEndCommandBuffer returns %d\n", ret);
 	}
+
 	void * addr = request_vertex_buffer_memory();
 	SDL_memcpy4(addr, batch_buffer->_data, batch_buffer->ElementSize * batch_buffer->Size / 4);
 	flush_vertex_buffer_memory();
