@@ -76,7 +76,7 @@ void render_layer(unsigned imageId, int layerId) {
 			count = 0;
 		}
 		++count;
-		if (count >= 128) {
+		if (count >= 512) {
 			sdlex_render_flush(imageId);
 			count = 0;
 		}
