@@ -225,7 +225,6 @@
     <ClCompile Include="Game\GameContents\JudgingSystem.c" />
     <ClCompile Include="Game\GameContents\RenderManager.c" />
     <ClCompile Include="Game\GameContents\ResourceManager.c" />
-    <ClCompile Include="Game\SDLEx\MathEx\Intersector.c" />
     <ClCompile Include="Game\SDLEx\Utils\ArrayList.c" />
     <ClCompile Include="Game\SDLEx\Utils\Deque.c" />
     <ClCompile Include="Game\SDLEx\Utils\Ellipse.c" />

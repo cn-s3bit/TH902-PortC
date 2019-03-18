@@ -93,6 +93,10 @@ inline float vector2_dsts(float ax, float ay, float bx, float by) {
 	return sqrtf(vector2_dst2s(ax, ay, bx, by));
 }
 
+inline float vector2_dst1v(Vector2 a, float bx, float by) {
+	return sqrtf(vector2_dst2s(a.X, a.Y, bx, by));
+}
+
 inline Vector2 vector2_unit(Vector2 a) {
 	if (vector2_lenSqr(a) == 0.0f)
 		return vector2_zero();

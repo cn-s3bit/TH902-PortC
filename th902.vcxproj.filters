@@ -530,8 +530,5 @@
     <ClCompile Include="Game\GameContents\CrazyStormWin32Interop.c">
       <Filter>Source Files\GameContents</Filter>
     </ClCompile>
-    <ClCompile Include="Game\SDLEx\MathEx\Intersector.c">
-      <Filter>Source Files\SDLEx\MathEx</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
