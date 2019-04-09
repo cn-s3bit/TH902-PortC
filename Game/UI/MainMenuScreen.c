@@ -15,21 +15,21 @@ static int effect_timer;
 static void initialize() {
 	current_select = 0;
 	effect_timer = 0;
-	Mix_PlayMusic(resources.BGM.StartingScene, SDL_MAX_SINT16);
+	/*Mix_PlayMusic(resources.BGM.StartingScene, SDL_MAX_SINT16);*/
 	bg = create_empty_renderable();
-	bg->Center = vector2_create(480.0f, 360.0f);
+	bg->Center = vector2_create(680.0f, 380.0f);
 	bg->Layer = RENDER_LAYER_BACKGROUND;
 	bg->TextureRegion.TextureID = resources.Images.Background[0];
 	bg->TextureRegion.Rect = texture_frame_by_id(resources.Images.Background[0]);
 	register_renderable(bg);
 	start = create_empty_renderable();
-	start->Center = vector2_create(620.0f, 540.0f);
+	start->Center = vector2_create(820.0f, 560.0f);
 	start->Layer = RENDER_LAYER_UI_0;
 	start->TextureRegion.TextureID = resources.Images.StoryMode;
 	start->TextureRegion.Rect = texture_frame_by_id(resources.Images.StoryMode);
 	register_renderable(start);
 	quit = create_empty_renderable();
-	quit->Center = vector2_create(620.0f, 590.0f);
+	quit->Center = vector2_create(820.0f, 610.0f);
 	quit->Layer = RENDER_LAYER_UI_0;
 	quit->TextureRegion.TextureID = resources.Images.Exit;
 	quit->TextureRegion.Rect = texture_frame_by_id(resources.Images.Exit);

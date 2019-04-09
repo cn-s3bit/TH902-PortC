@@ -28,6 +28,7 @@ void load_resources() {
 	resources.Images.ReimuAnim = load_texture2d(RESOURCE_FOLDER "Game/Image/Players/Reimu.png");
 	resources.Images.ReimuOneFrame = load_texture2d(RESOURCE_FOLDER "Game/Image/Players/ReimuOneFrame.png");
 	resources.Images.JudgeDisplay = load_texture2d(RESOURCE_FOLDER "Game/Image/Players/JudgeDisplay.png");
+	resources.Images.FightAreaBackground = load_texture2d(RESOURCE_FOLDER "Game/Image/FightAreaBackground.png");
 	Mix_Init(MIX_INIT_MP3);
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 512);
 	const char * x = SDL_GetError();

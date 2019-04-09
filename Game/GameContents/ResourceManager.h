@@ -11,6 +11,7 @@ struct Resources {
 		long ReimuOneFrame;
 		long ReimuAnim;
 		long JudgeDisplay;
+		long FightAreaBackground;
 	} Images;
 	struct {
 		Mix_Chunk * Biu;

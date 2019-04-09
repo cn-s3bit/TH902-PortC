@@ -11,6 +11,13 @@
 Projectile * projs[1024];
 enum PlayerType player_type = PLAYER_REIMU_A;
 
+float fight_area_left = 220.0f;
+float fight_area_top = 30.0f;
+float fight_area_wight = 960.0f;
+float fight_area_height = 720.0f;
+
+static Renderable * fight_area;
+
 void * player;
 
 
@@ -28,10 +35,16 @@ static Vector2 _t(void) {
 }
 
 static void initialize() {
+	fight_area = create_empty_renderable();
+	fight_area->Center = vector2_create(fight_area_left + fight_area_wight / 2, fight_area_top + fight_area_height / 2);
+	fight_area->Layer = RENDER_LAYER_BACKGROUND;
+	fight_area->TextureRegion.TextureID = resources.Images.FightAreaBackground;
+	fight_area->TextureRegion.Rect = texture_frame_by_id(resources.Images.FightAreaBackground);
+	register_renderable(fight_area);
 	free_projectile(alloc_projectile());
 	player = get_player_interface(player_type).initialize(vector2_create(280.0f, 620.0f));
 	csinstance = crazy_storm_start(RESOURCE_FOLDER "Game/CrazyStormRT.exe");
-	crazy_storm_load_mbg(csinstance, RESOURCE_FOLDER "Game/Image/Danmaku/LD.mbg");
+	crazy_storm_load_mbg(csinstance, RESOURCE_FOLDER "Game/Danmaku/LD.mbg");
 	crazy_storm_register_player_pos(csinstance, _t);
 	/*for (int i = 0; i < 1024; i++) {
 		projs[i] = alloc_projectile();
