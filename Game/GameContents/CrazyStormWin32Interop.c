@@ -7,7 +7,7 @@ static long _send_command(CrazyStormInstance * instance, const char * command) {
 }
 
 inline void _set_renderable(Renderable * renderable, float x, float y, float w, float h, long t, float r, float g, float b, float a, float rot) {
-	renderable->Center = vector2_create(x, y);
+	renderable->Center = vector2_create(x + 220.0f, y + 30.0f);
 	renderable->Scale = vector2_create(w, h);
 	renderable->Color = vector4_create(r, g, b, a);
 	renderable->Rotation = rot;
