@@ -49,13 +49,13 @@ void update_player_reimu_a(void * thiz) {
 	PlayerReimuA * p = (PlayerReimuA *)thiz;
 	++global_timer_a;
 	p->Velocity = vector2_zero();
-	if (get_action(p->Action, 2))
+	if (get_action(p->Action, 2) && p->Position.Y > 70.0f)
 		p->Velocity = vector2_adds(p->Velocity, 0.0f, -1.0f);
-	if (get_action(p->Action, 3))
+	if (get_action(p->Action, 3) && p->Position.Y < 710.0f)
 		p->Velocity = vector2_adds(p->Velocity, 0.0f, 1.0f);
-	if (get_action(p->Action, 4))
+	if (get_action(p->Action, 4) && p->Position.X > 245.0f)
 		p->Velocity = vector2_adds(p->Velocity, -1.0f, 0.0f);
-	if (get_action(p->Action, 5))
+	if (get_action(p->Action, 5) && p->Position.X < 1155.0f)
 		p->Velocity = vector2_adds(p->Velocity, 1.0f, 0.0f);
 	if (p->_anim != 2 && p->Velocity.X > 0.0f)
 		p->_anim = 2, p->_animTimer = 0;
