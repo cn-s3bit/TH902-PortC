@@ -13,7 +13,7 @@ enum PlayerType player_type = PLAYER_REIMU_A;
 
 float fight_area_left = 220.0f;
 float fight_area_top = 30.0f;
-float fight_area_wight = 960.0f;
+float fight_area_width = 960.0f;
 float fight_area_height = 720.0f;
 
 static Renderable * fight_area;
@@ -34,13 +34,29 @@ static Vector2 _t(void) {
 	return get_player_interface(player_type).get_position(player);
 }
 
+inline void _add_black_tile(Vector2 center) {
+	Renderable * renderer = create_empty_renderable();
+	renderer->Center = center;
+	renderer->Layer = RENDER_LAYER_OVERLAY;
+	renderer->Scale = vector2_create(2.0f, 2.0f);
+	renderer->Color = vector4_create(0.0f, 0.0f, 0.0f, 1.0f);
+	renderer->TextureRegion.TextureID = resources.Images.FightAreaBackground;
+	renderer->TextureRegion.Rect = texture_frame_by_id(resources.Images.FightAreaBackground);
+	register_renderable(renderer);
+}
+
 static void initialize() {
 	fight_area = create_empty_renderable();
-	fight_area->Center = vector2_create(fight_area_left + fight_area_wight / 2, fight_area_top + fight_area_height / 2);
+	fight_area->Center = vector2_create(fight_area_left + fight_area_width / 2, fight_area_top + fight_area_height / 2);
 	fight_area->Layer = RENDER_LAYER_BACKGROUND;
 	fight_area->TextureRegion.TextureID = resources.Images.FightAreaBackground;
 	fight_area->TextureRegion.Rect = texture_frame_by_id(resources.Images.FightAreaBackground);
 	register_renderable(fight_area);
+	_add_black_tile(vector2_create(fight_area_left + fight_area_width * 2, fight_area_top + fight_area_height / 2));
+	_add_black_tile(vector2_create(fight_area_left + fight_area_width / 2, fight_area_top + fight_area_height * 2));
+	_add_black_tile(vector2_create(fight_area_left - fight_area_width, fight_area_top + fight_area_height / 2));
+	_add_black_tile(vector2_create(fight_area_left + fight_area_width / 2, fight_area_top - fight_area_height));
+
 	free_projectile(alloc_projectile());
 	player = get_player_interface(player_type).initialize(vector2_create(280.0f, 620.0f));
 	csinstance = crazy_storm_start(RESOURCE_FOLDER "Game/CrazyStormRT.exe");
