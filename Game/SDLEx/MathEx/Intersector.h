@@ -4,7 +4,7 @@
 #include "./SDL_rect.h"
 #include "./Vector2.h"
 #include "MathEx.h"
-SDL_bool intersector_is_point_in_triangle(Vector2 p, Vector2 a, Vector2 b, Vector2 c) {
+inline SDL_bool intersector_is_point_in_triangle(Vector2 p, Vector2 a, Vector2 b, Vector2 c) {
 	float pX1 = p.X - a.X;
 	float pY1 = p.Y - a.Y;
 	SDL_bool side12 = (b.X - a.X) * pY1 - (b.Y - a.Y) * pX1 > 0;
@@ -13,7 +13,7 @@ SDL_bool intersector_is_point_in_triangle(Vector2 p, Vector2 a, Vector2 b, Vecto
 	return SDL_TRUE;
 }
 
-SDL_bool intersector_is_point_in_triangle_scalar(float px, float py, float ax, float ay, float bx, float by, float cx, float cy) {
+inline SDL_bool intersector_is_point_in_triangle_scalar(float px, float py, float ax, float ay, float bx, float by, float cx, float cy) {
 	float px1 = px - ax;
 	float py1 = py - ay;
 	SDL_bool side12 = (bx - ax) * py1 - (by - ay) * px1 > 0;
@@ -22,20 +22,20 @@ SDL_bool intersector_is_point_in_triangle_scalar(float px, float py, float ax, f
 	return SDL_TRUE;
 }
 
-long intersector_point_line_side(Vector2 linePoint1, Vector2 linePoint2, Vector2 point) {
+inline long intersector_point_line_side(Vector2 linePoint1, Vector2 linePoint2, Vector2 point) {
 	return signum((linePoint2.X - linePoint1.X) * (point.Y - linePoint1.Y) - (linePoint2.Y - linePoint1.Y) * (point.X - linePoint1.X));
 }
 
-long intersector_point_line_side_scalar(float linePoint1X, float linePoint1Y, float linePoint2X, float linePoint2Y, float pointX, float pointY) {
+inline long intersector_point_line_side_scalar(float linePoint1X, float linePoint1Y, float linePoint2X, float linePoint2Y, float pointX, float pointY) {
 	return signum((linePoint2X - linePoint1X) * (pointY - linePoint1Y) - (linePoint2Y - linePoint1Y) * (pointX - linePoint1X));
 }
 
-float intersector_distance_line_point(float startX, float startY, float endX, float endY, float pointX, float pointY) {
+inline float intersector_distance_line_point(float startX, float startY, float endX, float endY, float pointX, float pointY) {
 	float normalLength = sqrtf((endX - startX) * (endX - startX) + (endY - startY) * (endY - startY));
 	return fabsf((pointX - startX) * (endY - startY) - (pointY - startY) * (endX - startX)) / normalLength;
 }
 
-Vector2 intersector_nearest_segment_point(Vector2 start, Vector2 end, Vector2 point) {
+inline Vector2 intersector_nearest_segment_point(Vector2 start, Vector2 end, Vector2 point) {
 	float length2 = vector2_dst2(start, end);
 	if (length2 == 0) return start;
 	float t = ((point.X - start.X) * (end.X - start.X) + (point.Y - start.Y) * (end.Y - start.Y)) / length2;
@@ -44,7 +44,7 @@ Vector2 intersector_nearest_segment_point(Vector2 start, Vector2 end, Vector2 po
 	return vector2_create(start.X + t * (end.X - start.X), start.Y + t * (end.Y - start.Y));
 }
 
-Vector2 intersector_nearest_segment_point_scalar(float startX, float startY, float endX, float endY, float pointX, float pointY) {
+inline Vector2 intersector_nearest_segment_point_scalar(float startX, float startY, float endX, float endY, float pointX, float pointY) {
 	float xDiff = endX - startX;
 	float yDiff = endY - startY;
 	float length2 = xDiff * xDiff + yDiff * yDiff;
@@ -55,17 +55,17 @@ Vector2 intersector_nearest_segment_point_scalar(float startX, float startY, flo
 	return vector2_create(startX + t * (endX - startX), startY + t * (endY - startY));
 }
 
-float intersector_distance_segment_point_scalar(float startX, float startY, float endX, float endY, float pointX, float pointY) {
+inline float intersector_distance_segment_point_scalar(float startX, float startY, float endX, float endY, float pointX, float pointY) {
 	Vector2 e = intersector_nearest_segment_point_scalar(startX, startY, endX, endY, pointX, pointY);
 	return vector2_dst1v(e, pointX, pointY);
 }
 
-float intersector_distance_segment_point(Vector2 start, Vector2 end, Vector2 point) {
+inline float intersector_distance_segment_point(Vector2 start, Vector2 end, Vector2 point) {
 	Vector2 e = intersector_nearest_segment_point(start, end, point);
 	return vector2_dst(e, point);
 }
 
-SDL_bool intersect_segment_circle(Vector2 start, Vector2 end, Vector2 center, float squareRadius) {
+inline SDL_bool intersect_segment_circle(Vector2 start, Vector2 end, Vector2 center, float squareRadius) {
 	Vector2 tmp = vector2_create(end.X - start.X, end.Y - start.Y);
 	Vector2 tmp1 = vector2_create(center.X - start.X, center.Y - start.Y);
 	Vector2 tmp2, tmp3;
@@ -83,7 +83,7 @@ SDL_bool intersect_segment_circle(Vector2 start, Vector2 end, Vector2 center, fl
 	return x * x + y * y <= squareRadius;
 }
 
-float intersect_segment_circle_display(Vector2 start, Vector2 end, Vector2 point, float radius, Vector2 displacement) {
+inline float intersect_segment_circle_display(Vector2 start, Vector2 end, Vector2 point, float radius, Vector2 displacement) {
 	Vector2 tmp, tmp2;
 	float u = (point.X - start.X) * (end.X - start.X) + (point.Y - start.Y) * (end.Y - start.Y);
 	float d = vector2_dst(start, end);
@@ -100,7 +100,7 @@ float intersect_segment_circle_display(Vector2 start, Vector2 end, Vector2 point
 		return INFINITY;
 }
 
-float intersect_ray_ray(Vector2 start1, Vector2 direction1, Vector2 start2, Vector2 direction2) {
+inline float intersect_ray_ray(Vector2 start1, Vector2 direction1, Vector2 start2, Vector2 direction2) {
 	float difx = start2.X - start1.X;
 	float dify = start2.Y - start1.Y;
 	float d1xd2 = direction1.X * direction2.Y - direction1.Y * direction2.X;
@@ -111,7 +111,7 @@ float intersect_ray_ray(Vector2 start1, Vector2 direction1, Vector2 start2, Vect
 	return difx * d2sy - dify * d2sx;
 }
 
-SDL_bool intersect_lines_scalar(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4, Vector2 * intersection) {
+inline SDL_bool intersect_lines_scalar(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4, Vector2 * intersection) {
 	float d = (y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1);
 	if (d == 0) return SDL_FALSE;
 
@@ -125,7 +125,7 @@ inline SDL_bool intersect_lines(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, 
 	return intersect_lines_scalar(p1.X, p1.Y, p2.X, p2.Y, p3.X, p3.Y, p4.X, p4.Y, intersection);
 }
 
-SDL_bool intersect_rectangle(SDL_Rect rectangle1, SDL_Rect rectangle2, SDL_Rect intersection) {
+inline SDL_bool intersect_rectangle(SDL_Rect rectangle1, SDL_Rect rectangle2, SDL_Rect intersection) {
 	if (rectangle1.x < rectangle2.x + rectangle2.w &&
 			rectangle1.x + rectangle1.w > rectangle2.x &&
 			rectangle1.y < rectangle2.y + rectangle2.h &&
@@ -139,7 +139,7 @@ SDL_bool intersect_rectangle(SDL_Rect rectangle1, SDL_Rect rectangle2, SDL_Rect 
 	return SDL_FALSE;
 }
 
-SDL_bool intersect_segments_scalar(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4, Vector2 * intersection) {
+inline SDL_bool intersect_segments_scalar(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4, Vector2 * intersection) {
 	float d = (y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1);
 	if (d == 0) return SDL_FALSE;
 	float yd = y1 - y3;
@@ -153,11 +153,11 @@ SDL_bool intersect_segments_scalar(float x1, float y1, float x2, float y2, float
 	return SDL_TRUE;
 }
 
-SDL_bool intersect_segments(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, Vector2 * intersection) {
+inline SDL_bool intersect_segments(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, Vector2 * intersection) {
 	return intersect_segments_scalar(p1.X, p1.Y, p2.X, p2.Y, p3.X, p3.Y, p4.X, p4.Y, intersection);
 }
 
-SDL_bool intersect_segment_rectangle_scalar(float startX, float startY, float endX, float endY, SDL_Rect rectangle) {
+inline SDL_bool intersect_segment_rectangle_scalar(float startX, float startY, float endX, float endY, SDL_Rect rectangle) {
 	float rectangleEndX = rectangle.x + rectangle.w;
 	float rectangleEndY = rectangle.y + rectangle.h;
 	if (intersect_segments_scalar(startX, startY, endX, endY, rectangle.x, rectangle.y, rectangle.x, rectangleEndY, NULL) ||
@@ -169,7 +169,7 @@ SDL_bool intersect_segment_rectangle_scalar(float startX, float startY, float en
 	return rectangle.x <= startX && rectangle.x + rectangle.w >= startX && rectangle.y < startY && rectangle.y + rectangle.h >= startY;
 }
 
-SDL_bool intersect_segment_rectangle(Vector2 start, Vector2 end, SDL_Rect rectangle) {
+inline SDL_bool intersect_segment_rectangle(Vector2 start, Vector2 end, SDL_Rect rectangle) {
 	return intersect_segment_rectangle_scalar(start.X, start.Y, end.X, end.Y, rectangle);
 }
 #endif
