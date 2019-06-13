@@ -1,7 +1,7 @@
 #include "BasicProjectile.h"
 #include "ResourceManager.h"
 
-#define MAX_PROJ 8192
+#define MAX_PROJ 8007
 #define MAX_PROJ_TYPE 256
 
 Deque * free_projectile_ids;
