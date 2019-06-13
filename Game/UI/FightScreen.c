@@ -30,7 +30,7 @@ void test_ai0(Projectile * proj) {
 
 CrazyStormInstance * csinstance;
 
-static Vector2 _t(void) {
+Vector2 get_player_position(void) {
 	return get_player_interface(player_type).get_position(player);
 }
 
@@ -61,7 +61,7 @@ static void initialize() {
 	player = get_player_interface(player_type).initialize(vector2_create(280.0f, 620.0f));
 	csinstance = crazy_storm_start(RESOURCE_FOLDER "Game/CrazyStormRT.exe");
 	crazy_storm_load_mbg(csinstance, RESOURCE_FOLDER "Game/Danmaku/LD.mbg");
-	crazy_storm_register_player_pos(csinstance, _t);
+	crazy_storm_register_player_pos(csinstance, get_player_position);
 	/*for (int i = 0; i < 1024; i++) {
 		projs[i] = alloc_projectile();
 		projs[i]->Type = rand() % 7 + 9;
@@ -75,14 +75,14 @@ static int update() {
 	get_player_interface(player_type).update(player);
 	crazy_storm_start_update_async(csinstance);
 	update_projectiles();
+	unsigned imageid = sdlex_begin_frame();
+	render_all_layers(imageid);
+	sdlex_end_frame(imageid);
 	crazy_storm_wait_update_async(csinstance);
 	return 1;
 }
 
 static void render() {
-	unsigned imageid = sdlex_begin_frame();
-	render_all_layers(imageid);
-	sdlex_end_frame(imageid);
 }
 
 static short handle_event(SDL_Event ev) {
